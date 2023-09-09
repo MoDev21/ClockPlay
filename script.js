@@ -11,7 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     const monthText = ['January','February','March','April','May','June','July','August','September','October','November','December',];
-    var alarmArray;
+    var repeatDaysArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    var setRepeatDaysArray = [];
+    var repearDaysString;
+
+    var alarmArray = [];
+    
+
 
 
     $.ajax({
@@ -38,13 +44,19 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(showTime, 1000)
     }
 
+    showTime();
+
     function checkTime(i) { 
         if (i < 10) { i = "0" + i};
         return i;
     }
+
     
 
-    showTime()
+
+    
+    
+
 
     // Event listener for the "Set Alarm" button
     setAlarmButton.addEventListener('click', function () {
@@ -65,11 +77,26 @@ document.addEventListener('DOMContentLoaded', function () {
     btn_repeatDate.forEach(e => e.addEventListener('click', function () {
             // Get the selected alarm time from the input field
             console.log(e.textContent);
+            repearDaysString = e.textContent;
+            setRepeatDaysArray.push(repearDaysString);
+            console.log(setRepeatDaysArray);
         })
 
     );
 
-    repeatDateSwitcher
+    // repeatDateSwitcher
+    function showRepeatDayOptions() { 
+        setRepeatDaysArray.forEach(e => {
+            console.log(e);
+            let repeatDay = document.querySelector('.repeat-days')
+                                .appendChild(document.createElement('li'))
+                                .appendChild(document.createElement("p"));
+            
+            repeatDay.textContent = `${e}`;
+
+            console.log(document.querySelector('.repeat-days'));
+        });
+    }
 
     // Function to set the alarm
     function setAlarm(alarmTime ,alarmNameInput) {
@@ -113,13 +140,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setClockTime.classList.add('set-alarm');
         
-
-        // alarmDates.innerHTML = `${alarmDate.getDay()}/${alarmDate.getMonth()}/${alarmDate.getFullYear()}`;
-        for (let index = 1; index <= 2; index++) {
-            alarmDates.innerHTML += `<p> Days <p>`;
-            
+        if(repearDaysString){
+            setRepeatDaysArray.forEach(e => {
+                alarmDates.innerHTML += `<p>${e}</p>`;
+            });
         }
-        
+        else{
+            alarmDates.innerHTML = `${alarmDate.getDay()}/${alarmDate.getMonth()}/${alarmDate.getFullYear()}`;
+        }
+        // alarmDates.innerHTML = `${alarmDate.getDay()}/${alarmDate.getMonth()}/${alarmDate.getFullYear()}`;
+
+
         alarmDates.classList.add('alarm-dates');
 
   
