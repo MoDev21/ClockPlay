@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const alarmTimeInput = document.getElementById('alarm-time');
     const alarmNameInput = document.getElementById('alarm-name-input');
     const setAlarmButton = document.getElementById('set-alarm');
-    const btn_repeatDate = document.querySelectorAll('.repeat-days > li');
+    const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
+    const repeatDateName = document.querySelectorAll('.repeat-days label li');
     const mainClock = document.querySelector('.main-clock');
 
     const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -74,15 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    btn_repeatDate.forEach(e => e.addEventListener('click', function () {
-            // Get the selected alarm time from the input field
-            console.log(e.textContent);
-            repearDaysString = e.textContent;
-            setRepeatDaysArray.push(repearDaysString);
-            console.log(setRepeatDaysArray);
-        })
-
-    );
+    
 
     // repeatDateSwitcher
     function showRepeatDayOptions() { 
@@ -131,18 +124,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+        //writes to title of the alarm
         alarmTItle.innerHTML = alarmNameInput;
         alarmTItle.classList.add('alarm-title');
         
-
+        //writes the chosen alarm
         alarmTimeHolder.innerHTML = `${checkTime(alarmDate.getHours())}:${checkTime(alarmDate.getMinutes())}`;
         alarmTimeHolder.classList.add('alarmTimeHolder');
 
         setClockTime.classList.add('set-alarm');
         
-        if(repearDaysString){
+        //writes the days where the alarms repeats
+
+        let replaceArray = [];
+
+        for (let i = 0; i < repeatDaysArray.length; i++) {
+            if(btn_repeatDate[i].checked){
+                if(repeatDaysArray[i].substring(0, 3) === btn_repeatDate[i].nextElementSibling.firstChild.innerHTML){
+                    replaceArray.push(`${repeatDaysArray[i].substring(0, 3)}`)
+                    setRepeatDaysArray = replaceArray;
+                    console.log(setRepeatDaysArray);
+                }
+            }
+        }
+
+
+        if(setRepeatDaysArray != false){
             setRepeatDaysArray.forEach(e => {
-                alarmDates.innerHTML += `<p>${e}</p>`;
+                alarmDates.innerHTML += `<span class="repearDatesSpan"><p>${e}</p></span>`;
             });
         }
         else{
@@ -159,13 +168,15 @@ document.addEventListener('DOMContentLoaded', function () {
         setClockTime.appendChild(alarmTimeHolder);
         setClockTime.appendChild(alarmTItle);
         setClockTime.appendChild(alarmDates);
+
+
         
-        let alarmObject = { time:alarmTimeHolder.textContent, title:alarmTItle.textContent, date:alarmDates.textContent}
+        let alarmObject = { time:alarmTimeHolder.textContent, title:alarmTItle.textContent, date:alarmDates}
 
 
         alarmArray.push(alarmObject);
         console.log(alarmArray);
-
+        
 
     }
 });

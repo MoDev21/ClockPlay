@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?ver=3.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
     
     <div class="main-container">
+        <div class="sidebar">            
+        </div>
         <div class="container">
             <h1>Alarm Clock App</h1>
             <h1 class="main-clock"></h1>
@@ -19,21 +21,39 @@
                 <label for="alarm-name-input">Set Alarm Name:</label>
                 <input type="text" id="alarm-name-input">
                 <ul class="repeat-days">
-                    <li><p>Mon</p></li>
-                    <li><p>Tue</p></li>
-                    <li><p>Wed</p></li>
-                    <li><p>Thu</p></li>
-                    <li><p>Fri</p></li>
-                    <li><p>Sat</p></li>
-                    <li><p>Sun</p></li>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Mon</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Tue</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Wed</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Thu</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Fri</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Sat</p></li>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <li><p>Sun</p></li>
+                    </label>               
                 </ul>
                 <button id="set-alarm">Set Alarm</button>
 
 
             </div>
-        </div>
-        <div class="sidebar">
-            
         </div>
     </div>
 
