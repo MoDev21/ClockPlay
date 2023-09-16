@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
     const repeatDateName = document.querySelectorAll('.repeat-days label li');
     const mainClock = document.querySelector('.main-clock');
+    const mainContainer = document.querySelector('.main-container')
 
     const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     const monthText = ['January','February','March','April','May','June','July','August','September','October','November','December',];
@@ -78,18 +79,18 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
     // repeatDateSwitcher
-    function showRepeatDayOptions() { 
-        setRepeatDaysArray.forEach(e => {
-            console.log(e);
-            let repeatDay = document.querySelector('.repeat-days')
-                                .appendChild(document.createElement('li'))
-                                .appendChild(document.createElement("p"));
+    // function showRepeatDayOptions() { 
+    //     setRepeatDaysArray.forEach(e => {
+    //         console.log(e);
+    //         let repeatDay = document.querySelector('.repeat-days')
+    //                             .appendChild(document.createElement('li'))
+    //                             .appendChild(document.createElement("p"));
             
-            repeatDay.textContent = `${e}`;
+    //         repeatDay.textContent = `${e}`;
 
-            console.log(document.querySelector('.repeat-days'));
-        });
-    }
+    //         console.log(document.querySelector('.repeat-days'));
+    //     });
+    // }
 
     // Function to set the alarm
     function setAlarm(alarmTime ,alarmNameInput) {
@@ -179,4 +180,86 @@ document.addEventListener('DOMContentLoaded', function () {
         
 
     }
+
+
+
+    function memorisationGame() {  
+        let gameSection = document.createElement('div');
+        let gameDisplay = document.createElement('div');
+        
+    }
+
+    
+//function start the match game to dtop the alarm
+    function matchGame() {
+
+        //Creates the game container
+        let gameContainer = document.createElement('div');
+        gameContainer.classList.add('game-container');
+        mainContainer.appendChild(gameContainer);
+
+        //Display the game
+        let gameDisplay = document.createElement('div');
+        gameDisplay.classList.add('game-display');
+        gameContainer.appendChild(gameDisplay);
+        
+        let assingedLetterNum = 0;
+
+        
+
+        
+        
+        // Generates the match game cards
+        for (let i = 0; i < 8; i++) {
+            const matchCards = document.createElement('div');
+            
+            
+            assingedLetterNum += 1;
+
+            if (assingedLetterNum > 4){
+                assingedLetterNum = 1;
+                
+            }
+
+
+            switch (assingedLetterNum) {
+                case 1:
+                    // assingedLetter = 'A';
+                    matchCards.setAttribute('data-card', 'A');
+                    console.log(assingedLetterNum);
+                    break;
+
+                case 2:
+                    // assingedLetter = 'B';
+                    matchCards.setAttribute('data-card', 'B');
+                    console.log(matchCards);  
+                    break;
+
+                case 3:
+                    // assingedLetter = 'B';
+                    matchCards.setAttribute('data-card', 'C');
+                    console.log(matchCards);
+                    break;
+
+                case 4:
+                    // assingedLetter = 'B';
+                    matchCards.setAttribute('data-card', 'D');
+                    console.log(matchCards);
+                    break;
+            
+                default:
+                    break;
+            };
+
+            matchCards.classList.add('match-card');
+
+            gameDisplay.appendChild(matchCards);
+            
+        }
+
+    }
+
+    matchGame();
+
+    function calcutionGame() {  }
 });
