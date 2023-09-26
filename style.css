@@ -85,7 +85,7 @@ body {
 
 .set-alarm{
     height: 169px;
-    width: 100%;
+    width: 90%;
     background-color: var(--primary-color);
     color: #fdfdfd;
     border-radius: 10px;
