@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Set a timeout to trigger the alarm when the time is up
         setTimeout(function () {
-            alert('Time to wake up!');
-        }, timeUntilAlarm);
+            matchGame();
+        },  );
 
 
 
@@ -198,6 +198,11 @@ document.addEventListener('DOMContentLoaded', function () {
         gameContainer.classList.add('game-container');
         mainContainer.appendChild(gameContainer);
 
+        let title = document.createElement('h1');
+        title.classList.add('gameTitle');
+        title.innerText = 'Wake up'
+        gameContainer.appendChild(title);
+
         //Display the game
         let gameDisplay = document.createElement('div');
         gameDisplay.classList.add('game-display');
@@ -205,13 +210,17 @@ document.addEventListener('DOMContentLoaded', function () {
         
         let assingedLetterNum = 0;
 
+        let firstCard = null;
+        let secondCard = null;
+
         
 
         
         
         // Generates the match game cards
         for (let i = 0; i < 8; i++) {
-            const matchCards = document.createElement('div');
+            const matchCard = document.createElement('div');
+
             
             
             assingedLetterNum += 1;
@@ -225,43 +234,126 @@ document.addEventListener('DOMContentLoaded', function () {
             switch (assingedLetterNum) {
                 case 1:
                     // assingedLetter = 'A';
-                    matchCards.setAttribute('data-card', 'A');
+                    matchCard.setAttribute('data-card', 'A');
+                    // matchCard.addEventListener('click', flipCard);
                     console.log(assingedLetterNum);
                     break;
 
                 case 2:
                     // assingedLetter = 'B';
-                    matchCards.setAttribute('data-card', 'B');
-                    console.log(matchCards);  
+                    matchCard.setAttribute('data-card', 'B');
+                    // matchCard.addEventListener('click', flipCard);
+                    console.log(matchCard);  
                     break;
 
                 case 3:
                     // assingedLetter = 'B';
-                    matchCards.setAttribute('data-card', 'C');
-                    console.log(matchCards);
+                    matchCard.setAttribute('data-card', 'C');
+                    // matchCard.addEventListener('click', flipCard);
+                    console.log(matchCard);
                     break;
 
                 case 4:
                     // assingedLetter = 'B';
-                    matchCards.setAttribute('data-card', 'D');
-                    console.log(matchCards);
+                    matchCard.setAttribute('data-card', 'D');
+                    // matchCard.addEventListener('click', flipCard);
+                    console.log(matchCard);
                     break;
             
                 default:
                     break;
             };
 
-            matchCards.classList.add('match-card');
+            matchCard.classList.add('match-card');
+            matchCard.addEventListener('click', () => {
+                const parameterValue = "Hello, World!";
+                flipCard(matchCard);
+            });
 
-            gameDisplay.appendChild(matchCards);
+            gameDisplay.appendChild(matchCard);
+
+            
             
         }
 
+        function shuffleCards() {
+            let matchCards = document.querySelectorAll('.match-card')
+            matchCards.forEach(matchCard => {
+                let randomPos = Math.floor(Math.random() * 8);
+                matchCard.style.order = randomPos;
+            });
+        }
+        shuffleCards();
         
+        
+        function flipCard(matchCard) {
+            if (!firstCard) {
+                firstCard = matchCard;
+                matchCard.innerHTML = firstCard.dataset.card;
+                firstCard.classList.add('flipped');
+            } else if (!secondCard && matchCard !== firstCard) {
+                secondCard = matchCard; 
+                matchCard.innerHTML = secondCard.dataset.card;
+                secondCard.classList.add('flipped');
+                checkMatch(matchCard);
+            }
+            console.log(matchCard);
+        }
+
+        function checkMatch(matchCard) { 
+            let matchCards = document.querySelectorAll('.match-card');
+            if (firstCard.dataset.card === secondCard.dataset.card){
+                console.log('yay');
+                firstCard = null;
+                secondCard = null;
+                matchCount();
+            }
+            else{   
+                
+                setTimeout(() => {
+                    console.log('nope');
+                    firstCard.innerHTML = '';
+                    secondCard.innerHTML = '';
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    firstCard = null;
+                    secondCard = null;
+                }, 500)
+            }
+        }
+
+        let count = 0;
+
+        function matchCount(matchCard) {
+            let matchCards = document.querySelectorAll('.match-card');
+            console.log(count);
+            count += 1;
+            if (count == 4) {        
+                setTimeout(() => {
+                    matchCards.forEach(matchCard => {
+                        matchCard.innerHTML = '';
+                        gameContainer.classList.add('remove-game')
+                        setTimeout(() => {
+                            mainContainer.removeChild(gameContainer);
+                        }, 1000)
+                    });
+                    count = 0;
+                }, 500);
+
+            } 
+            
+            
+        }
+
+
 
     }
 
-    matchGame();
+
 
     function calcutionGame() {  }
+
+    function Congradulation() { 
+
+    }
 });

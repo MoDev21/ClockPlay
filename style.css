@@ -57,11 +57,10 @@ body {
 .repeat-days{
     display: flex;
     list-style: none;
-    padding: 2;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 10px;
+    gap: 7px;
     color: var(--font-color-dark);
+    justify-content: center;
+    padding: 0;
 }
 
 .repeat-days li{
@@ -102,12 +101,16 @@ body {
 
 .container {
     grid-area: container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     background-color: var(--primary-color);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 100%;
+
 }
 
 
@@ -118,6 +121,15 @@ h1 {
 }
 
 .alarm-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas: ". .";
+
+}
+
+.alarm-form__section-1{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -184,8 +196,116 @@ button {
     padding: 10px 20px;
     margin-top: 10px;
     cursor: pointer;
+    position: relative;
+    left: 200px;
+    top: 30px;
+    transition: .5s;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+/* Match game */
+
+.game-container{
+    background-color: rgb(193, 235, 153);
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation-name: start-game-animation;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes start-game-animation {
+    0% {margin-top: 100vh;}
+    100% {margin-top: 0vh;}
+}
+.game-container h1{
+    color: #141414;
+    font-size: 0rem;
+    animation-name: game-title-animation;
+    animation-delay: .5s;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes game-title-animation {
+    0% {margin-top: 25%;
+        font-size: 0rem;}
+    80% {margin-top: 25%;
+        font-size: 10rem;}
+    100% {margin-top: 10%;
+        font-size: 6rem;}
+}
+
+.game-display{
+    position: relative;
+    top: 75%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        ". . . ."
+        ". . . .";
+    gap: 10px;
+    width: 700px;
+    margin: auto;
+    opacity: 0;
+    animation-name: game-display-animation;
+    animation-delay: 2s;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes game-display-animation {
+    0% {opacity: 0;
+        top: 75%;}
+    100% {opacity: 1;
+        top: 0%;}
+}
+
+
+
+.match-card{
+    background-color: #141414;
+    height: 230px;
+    width: 100%;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 4rem;
+}
+
+.flipped{
+    background-color: #5d703f;
+}
+
+.remove-game{
+    animation-name: remove-game-animation;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes remove-game-animation {
+    0% {scale: 1}
+    100% {scale: 0}
 }
