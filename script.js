@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const setAlarmButton = document.getElementById('set-alarm');
     const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
     const repeatDateName = document.querySelectorAll('.repeat-days label li');
-    const mainClock = document.querySelector('.main-clock');
+    const mainClock = document.querySelector('.main-clock__time');
+    const mainClock_seconds = document.querySelector('.main-clock__secondes svg circle:nth-child(2)');
     const mainContainer = document.querySelector('.main-container')
 
     const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -19,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var alarmArray = [];
     
+    //options for MatchGame
+    const cardLetterArray = ['A','B','C','D','E'];
+    const cardAmounts = 0;
 
 
 
@@ -41,8 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let seconds = today.getSeconds();
         hours = checkTime(hours);
         minutes = checkTime(minutes);
-        seconds = checkTime(seconds);
-        mainClock.innerHTML =  `${hours}:${minutes}:${seconds}`;
+        seconds = checkTime(seconds) * (100/60);
+        mainClock_seconds.style.strokeDashoffset = `calc(1540 - ((1540 * ${seconds}) / 100))`;
+        mainClock.innerHTML =  `${hours}:${minutes}`;
         setTimeout(showTime, 1000)
     }
 
@@ -77,20 +82,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     
-
-    // repeatDateSwitcher
-    // function showRepeatDayOptions() { 
-    //     setRepeatDaysArray.forEach(e => {
-    //         console.log(e);
-    //         let repeatDay = document.querySelector('.repeat-days')
-    //                             .appendChild(document.createElement('li'))
-    //                             .appendChild(document.createElement("p"));
+    /* I am going to work on it later */
+    // repeatDateSwitcher();
+    function showRepeatDayOptions() { 
+        setRepeatDaysArray.forEach(e => {
+            console.log(e);
+            let repeatDay = document.querySelector('.repeat-days')
+                                .appendChild(document.createElement('li'))
+                                .appendChild(document.createElement("p"));
             
-    //         repeatDay.textContent = `${e}`;
+            repeatDay.textContent = `${e}`;
 
-    //         console.log(document.querySelector('.repeat-days'));
-    //     });
-    // }
+            console.log(document.querySelector('.repeat-days'));
+        });
+    }
+
+    showRepeatDayOptions() 
 
     // Function to set the alarm
     function setAlarm(alarmTime ,alarmNameInput) {
@@ -106,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Combine the current date and selected alarm time to create a Date object
         const alarmDate = new Date(now.toDateString() + ' ' + alarmTime);
-
+        console.log(alarmDate);
         // Get the current time in milliseconds
         const currentTime = now.getTime();
 
@@ -121,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set a timeout to trigger the alarm when the time is up
         setTimeout(function () {
             matchGame();
-        },  );
+        },  timeUntilAlarm);
 
 
 
@@ -156,9 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         else{
-            alarmDates.innerHTML = `${alarmDate.getDay()}/${alarmDate.getMonth()}/${alarmDate.getFullYear()}`;
+            alarmDates.innerHTML = `${alarmDate.getDate()}/${alarmDate.getMonth() + 1}/${alarmDate.getFullYear()}`;
         }
-        // alarmDates.innerHTML = `${alarmDate.getDay()}/${alarmDate.getMonth()}/${alarmDate.getFullYear()}`;
+
 
 
         alarmDates.classList.add('alarm-dates');
@@ -190,8 +197,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     
-//function start the match game to dtop the alarm
+
+
+    //function start the match game to dtop the alarm
     function matchGame() {
+
+
+
 
         //Creates the game container
         let gameContainer = document.createElement('div');
@@ -203,15 +215,16 @@ document.addEventListener('DOMContentLoaded', function () {
         title.innerText = 'Wake up'
         gameContainer.appendChild(title);
 
-        //Display the game
+        //Displays the game
         let gameDisplay = document.createElement('div');
         gameDisplay.classList.add('game-display');
         gameContainer.appendChild(gameDisplay);
-        
         let assingedLetterNum = 0;
-
         let firstCard = null;
         let secondCard = null;
+
+        //for matchCount function
+        let matchCountNumber = 0;
 
         
 
@@ -225,6 +238,10 @@ document.addEventListener('DOMContentLoaded', function () {
             
             assingedLetterNum += 1;
 
+
+            //This line will be used when i create settings for the game
+            //if (assingedLetterNum > (cardAmounts - (cardAmounts / 2))){
+
             if (assingedLetterNum > 4){
                 assingedLetterNum = 1;
                 
@@ -233,30 +250,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
             switch (assingedLetterNum) {
                 case 1:
-                    // assingedLetter = 'A';
                     matchCard.setAttribute('data-card', 'A');
-                    // matchCard.addEventListener('click', flipCard);
                     console.log(assingedLetterNum);
                     break;
 
                 case 2:
-                    // assingedLetter = 'B';
                     matchCard.setAttribute('data-card', 'B');
-                    // matchCard.addEventListener('click', flipCard);
                     console.log(matchCard);  
                     break;
 
                 case 3:
-                    // assingedLetter = 'B';
                     matchCard.setAttribute('data-card', 'C');
-                    // matchCard.addEventListener('click', flipCard);
                     console.log(matchCard);
                     break;
 
                 case 4:
-                    // assingedLetter = 'B';
                     matchCard.setAttribute('data-card', 'D');
-                    // matchCard.addEventListener('click', flipCard);
+                    console.log(matchCard);
+                    break;
+
+                case 5:
+                    matchCard.setAttribute('data-card', 'E');
                     console.log(matchCard);
                     break;
             
@@ -276,6 +290,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
         }
 
+        //Shuffles Cards
         function shuffleCards() {
             let matchCards = document.querySelectorAll('.match-card')
             matchCards.forEach(matchCard => {
@@ -303,41 +318,71 @@ document.addEventListener('DOMContentLoaded', function () {
         function checkMatch(matchCard) { 
             let matchCards = document.querySelectorAll('.match-card');
             if (firstCard.dataset.card === secondCard.dataset.card){
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
                 console.log('yay');
                 firstCard = null;
                 secondCard = null;
                 matchCount();
+                
+
             }
             else{   
                 
-                setTimeout(() => {
-                    console.log('nope');
-                    firstCard.innerHTML = '';
-                    secondCard.innerHTML = '';
-                    firstCard.classList.remove('flipped');
-                    secondCard.classList.remove('flipped');
-                    firstCard = null;
-                    secondCard = null;
-                }, 500)
+
+
+                if (firstCard.classList.contains('matched')){
+                    setTimeout(() => {
+                        console.log('nope');
+                        secondCard.innerHTML = '';
+                        secondCard.classList.remove('flipped');
+                        firstCard = null;
+                        secondCard = null;
+                    }, 500)
+
+                }
+                else if(secondCard.classList.contains('matched')){
+                    setTimeout(() => {
+                        console.log('nope');
+                        firstCard.innerHTML = '';
+                        firstCard.classList.remove('flipped');
+                        firstCard = null;
+                        secondCard = null;
+                    }, 500)
+                }
+                else{
+                    setTimeout(() => {
+                        console.log('nope');
+                        firstCard.innerHTML = '';
+                        secondCard.innerHTML = '';
+                        firstCard.classList.remove('flipped');
+                        secondCard.classList.remove('flipped');
+                        firstCard = null;
+                        secondCard = null;
+                    }, 500)
+                }
+
+
             }
         }
 
-        let count = 0;
+        
 
         function matchCount(matchCard) {
             let matchCards = document.querySelectorAll('.match-card');
-            console.log(count);
-            count += 1;
-            if (count == 4) {        
+            console.log(matchCountNumber);
+            matchCountNumber += 1;
+            //This line will be used when i create settings for the game
+            //if (matchCountNumber == (cardAmounts - (cardAmounts/2))) {     
+            if (matchCountNumber == 4) {        
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
-                        matchCard.innerHTML = '';
                         gameContainer.classList.add('remove-game')
                         setTimeout(() => {
                             mainContainer.removeChild(gameContainer);
-                        }, 1000)
+                        }, 2000)
                     });
-                    count = 0;
+                    matchCountNumber = 0;
                 }, 500);
 
             } 
