@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hours = checkTime(hours);
         minutes = checkTime(minutes);
         seconds = checkTime(seconds) * (100/60);
+        //
         mainClock_seconds.style.strokeDashoffset = `calc(1540 - ((1540 * ${seconds}) / 100))`;
         mainClock.innerHTML =  `${hours}:${minutes}`;
         setTimeout(showTime, 1000)
@@ -60,8 +61,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
 
+    btn_repeatDate.forEach(btn => {
+        btn.nextElementSibling.classList.add('repeat-days-btn');
+        btn.addEventListener('change', function () {
+            if (this.checked) {
+                // Checkbox is checked
+                console.log("Checkbox is checked");
+                btn.nextElementSibling.classList.add('repeat-days-checked');
+              } else {
+                // Checkbox is unchecked
+                console.log("Checkbox is unchecked");
+                btn.nextElementSibling.classList.remove('repeat-days-checked');
+              }
+        });
+    })
 
-    
     
 
 
@@ -146,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let replaceArray = [];
 
+        //checkes for the repeat days that are checked to put them in the replaceArray
         for (let i = 0; i < repeatDaysArray.length; i++) {
             if(btn_repeatDate[i].checked){
                 if(repeatDaysArray[i].substring(0, 3) === btn_repeatDate[i].nextElementSibling.firstChild.innerHTML){
@@ -154,6 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log(setRepeatDaysArray);
                 }
             }
+            // else if(btn_repeatDate[i].checked){
+            //     if(repeatDaysArray[i].substring(0, 3) === btn_repeatDate[i].nextElementSibling.firstChild.innerHTML){
+            //         replaceArray.pop(`${repeatDaysArray[i].substring(0, 3)}`)
+            //         setRepeatDaysArray = replaceArray;
+            //         console.log(setRepeatDaysArray);
+            //     }
+            // }
         }
 
 

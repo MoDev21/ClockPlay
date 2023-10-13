@@ -4,6 +4,7 @@
     --background-color: #181818;
     --primary-color: #1b1b1b;
     --secondary-color: #141414;
+    --accent-color-2: #5C6B3B;
     --accent-color: #bcd978;
     --accent-color-hover: #e9f3d2;
     --font-color: white;
@@ -65,8 +66,9 @@ body {
     text-align: center;
 }
 
-.main-clock__background{
+.main-clock__background {
     position: relative;
+    top: 7px;
     background-color: #141414;
     border-radius: 50%;
     margin: 0;
@@ -78,11 +80,11 @@ body {
     z-index: 1;
 }
 
-.main-clock__secondes{
+.main-clock__secondes {
     position: absolute;
     top: 75px;
-    height: 510px;
-    width: 510px;
+    height: 523px;
+    width: 523px;
     transform: rotate(270deg);
 }
 
@@ -118,22 +120,36 @@ body {
     padding: 0;
 }
 
-.repeat-days li{
-    background-color: var(--accent-color);
-    border-radius: 40px;
+.repeat-days-btn {
+    background-color: var(--accent-color-2);
+    color: #fdfdfd;
+    border-radius: 50%;
+    height: 50px;
     width: 50px;
 }
 
-.repeat-days li:hover{
+.repeat-days-btn:hover{
     cursor: pointer;
     background-color: var(--accent-color-hover);
+    color: #141414; 
 }
 
-/* .repeat-days input{
-    opacity: 0;
+.repeat-days-btn p{
+    padding: 28% 0px;
+}
+
+
+.repeat-days-checked{
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: #141414;
+}
+
+.repeat-days input{
+    display: none;
     width: 0;
     height: 0;
-} */
+}
 
 
 
