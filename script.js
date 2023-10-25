@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const setAlarmButton = document.getElementById('set-alarm');
     const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
     const repeatDateName = document.querySelectorAll('.repeat-days label li');
+    const btn_alarmDays = document.querySelectorAll('.alarm-days label input');
     const mainClock = document.querySelector('.main-clock__time');
     const mainClock_seconds = document.querySelector('.main-clock__secondes svg circle:nth-child(2)');
     const mainContainer = document.querySelector('.main-container')
@@ -17,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var repeatDaysArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     var setRepeatDaysArray = [];
     var repearDaysString;
-
+    var days = [];
     var alarmArray = [];
-    
+    const GlobalDate = new Date();
     //options for MatchGame
     const cardLetterArray = ['A','B','C','D','E'];
     const cardAmounts = 0;
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    
 
 
     function showTime() { 
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hours = checkTime(hours);
         minutes = checkTime(minutes);
         seconds = checkTime(seconds) * (100/60);
-        //
+        //Light green s
         mainClock_seconds.style.strokeDashoffset = `calc(1540 - ((1540 * ${seconds}) / 100))`;
         mainClock.innerHTML =  `${hours}:${minutes}`;
         setTimeout(showTime, 1000)
@@ -76,7 +78,151 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
+    // Alarm Days
+
+    function getDaysInMonth(year, month) {
+        // Create a new date object for the first day of the given month
+        const date = new Date(year, month, 1);
+        days = [];
+        
     
+        // Continue adding days to the array while the month is the same
+        while (date.getMonth() === month) {
+            
+            days.push(new Date(date).getDate());
+            date.setDate(date.getDate() + 1);
+        }   
+
+        
+    
+        return days;
+    }
+
+    function getDaysInWeek() {
+        // Create a new date object for the first day of the given month
+
+        days = [];
+        repeatDaysArray.forEach(e => {
+            days.push(e);
+
+        })        
+    
+        return days;
+    }
+
+    var switcher = false
+    // var modeSwitcher = document.querySelector('.date-toggle')
+
+
+    document.querySelector('.date-toggle input').addEventListener('change', function () {
+        if (!this.checked) {
+            // Checkbox is checked
+            console.log('mode false');
+            switcher = false;
+            AlarmDateModeSwitcher(switcher);
+            generateDateToggleBtn();
+            $('button').removeClass("button-move");
+            let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34" fill="none">
+                                        <path d="M19.5 5.09078V1.81143M19.5 5.09078V8.37014M19.5 5.09078H12.75M1.5 14.9288V29.6859C1.5 31.4971 2.84314 32.9653 4.5 32.9653H25.5C27.1569 32.9653 28.5 31.4971 28.5 29.6859V14.9288H1.5Z" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M1.5 14.9288V8.37014C1.5 6.559 2.84314 5.09079 4.5 5.09079H7.5" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7.5 1.81143V8.37014" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M28.5 14.9288V8.37014C28.5 6.559 27.1569 5.09079 25.5 5.09079H24.75" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>`;
+                                 
+            $('.date-toggle span').html(repeatDayToggle);
+            $('.alarm-form__section-repeat-days').css({    
+            'height': '100px'});
+        }
+        else{
+            console.log('mode true');
+            switcher = true;
+            AlarmDateModeSwitcher(switcher);
+            generateDateToggleBtn();
+            $('button').addClass("button-move");
+            let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                                        <path d="M31.0556 24.2883H12.0556C8.53703 24.2883 1.5 22.0483 1.5 13.0883C1.5 4.12834 8.53703 1.88834 12.0556 1.88834H28.9444C32.463 1.88834 39.5 4.12834 39.5 13.0883C39.5 16.4356 38.5179 18.8451 37.1039 20.5502" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M25.7778 18.6883L31.0556 24.2883L25.7778 29.8883" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>`;
+        
+            $('.date-toggle span').html(repeatDayToggle);
+            $('.alarm-form__section-repeat-days').css({    
+                'height': '275px'});
+
+        }
+    });
+
+    function AlarmDateModeSwitcher(switcher) {      
+
+        if(!switcher){
+            getDaysInWeek();
+        }
+        else{
+            getDaysInMonth(GlobalDate.getFullYear(), GlobalDate.getMonth());
+        }
+
+    }
+
+    // mainClock.addEventListener('click', function () { 
+    //     console.log('clock ' + switcher);
+    //     AlarmDateModeSwitcher(switcher);
+    //     generateDateToggleBtn()
+    // });
+
+
+
+    function generateDateToggleBtn() { 
+        let repeatDay = document.querySelector('.alarm-form__section-repeat-days ul');
+        
+        while (repeatDay.hasChildNodes()) {
+            repeatDay.removeChild(repeatDay.firstChild);
+        }
+
+        days.forEach(e => {
+            let repeatDayBtn = `<label class="toggle">
+                                    <input type="checkbox">
+                                    <li><p>${e}</p></li>
+                                </label>`;                                
+            $(repeatDay).append(repeatDayBtn);
+            console.log(repeatDay);
+        });
+
+        document.querySelectorAll('.repeat-days label input').forEach(btn => {
+            btn.nextElementSibling.classList.add('alarm-days-btn');
+            btn.addEventListener('change', function () {
+                if (this.checked) {
+                    // Checkbox is checked
+                    console.log("Checkbox is checked");
+                    btn.nextElementSibling.classList.add('alarm-days-checked');
+                  } else {
+                    // Checkbox is unchecked
+                    console.log("Checkbox is unchecked");
+                    btn.nextElementSibling.classList.remove('alarm-days-checked');
+                  }
+            }); 
+
+            $(".repeat-days label li").delay(50).each(function(i) {
+                $(this).delay(18 * i).queue(function() {
+                  $(this).addClass("show-alarm-days-btn");
+                })
+            })
+        });
+
+
+
+    }
+
+    AlarmDateModeSwitcher(switcher);
+    generateDateToggleBtn();
+
+
+
+    
+    /* I am going to work on it later */
+    // repeatDateSwitcher();
+
+
+
+
 
 
     // Event listener for the "Set Alarm" button
@@ -95,24 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    
-    /* I am going to work on it later */
-    // repeatDateSwitcher();
-    function showRepeatDayOptions() { 
-        setRepeatDaysArray.forEach(e => {
-            console.log(e);
-            let repeatDay = document.querySelector('.repeat-days')
-                                .appendChild(document.createElement('li'))
-                                .appendChild(document.createElement("p"));
-            
-            repeatDay.textContent = `${e}`;
-
-            console.log(document.querySelector('.repeat-days'));
-        });
-    }
-
-    showRepeatDayOptions() 
-
     // Function to set the alarm
     function setAlarm(alarmTime ,alarmNameInput) {
         let alarmTItle = document.createElement('div');
@@ -120,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let alarmDates = document.createElement('div');
         let alarmTimeHolder = document.createElement('div');
         
-       
+        
 
         // Get the current time
         const now = new Date();
@@ -159,33 +287,41 @@ document.addEventListener('DOMContentLoaded', function () {
         //writes the days where the alarms repeats
 
         let replaceArray = [];
-
+        let uncheckCount = 0;
         //checkes for the repeat days that are checked to put them in the replaceArray
         for (let i = 0; i < repeatDaysArray.length; i++) {
-            if(btn_repeatDate[i].checked){
-                if(repeatDaysArray[i].substring(0, 3) === btn_repeatDate[i].nextElementSibling.firstChild.innerHTML){
+            if(document.querySelectorAll('.repeat-days label input')[i].checked){
+                if(repeatDaysArray[i].substring(0, 3) === document.querySelectorAll('.repeat-days label input')[i].nextElementSibling.firstChild.innerHTML){
+                    // Add the checked name or names of to the replay array who will replace the content 
+                    // of the setRepeatDaysArray 
                     replaceArray.push(`${repeatDaysArray[i].substring(0, 3)}`)
                     setRepeatDaysArray = replaceArray;
-                    console.log(setRepeatDaysArray);
                 }
             }
-            // else if(btn_repeatDate[i].checked){
-            //     if(repeatDaysArray[i].substring(0, 3) === btn_repeatDate[i].nextElementSibling.firstChild.innerHTML){
-            //         replaceArray.pop(`${repeatDaysArray[i].substring(0, 3)}`)
-            //         setRepeatDaysArray = replaceArray;
-            //         console.log(setRepeatDaysArray);
-            //     }
-            // }
+            
+            // To make sure 
+            if(!document.querySelectorAll('.repeat-days label input')[i].checked){
+                uncheckCount++;
+                if (uncheckCount == 7) {
+                    setRepeatDaysArray = [];
+                }
+                console.log('no check');
+            }
         }
 
 
-        if(setRepeatDaysArray != false){
+
+
+        // if there is a presence of a day in setRepeatDaysArray it will be add to the html
+        // else it will add the present date
+        if(setRepeatDaysArray.length > 0){
+            // adds the content of the setRepeatDaysArray to the html
             setRepeatDaysArray.forEach(e => {
                 alarmDates.innerHTML += `<span class="repearDatesSpan"><p>${e}</p></span>`;
             });
         }
         else{
-            alarmDates.innerHTML = `${alarmDate.getDate()}/${alarmDate.getMonth() + 1}/${alarmDate.getFullYear()}`;
+            alarmDates.innerHTML = `${alarmDate.getDate()} - ${monthText[alarmDate.getMonth()]} - ${alarmDate.getFullYear()}`;
         }
 
 
@@ -212,11 +348,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    function memorisationGame() {  
-        let gameSection = document.createElement('div');
-        let gameDisplay = document.createElement('div');
+    // function memorisationGame() {  
+    //     let gameSection = document.createElement('div');
+    //     let gameDisplay = document.createElement('div');
         
-    }
+    // }
 
     
 

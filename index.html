@@ -36,10 +36,21 @@
                     <input type="text" id="alarm-name-input">
                     <button id="set-alarm">Set Alarm</button>
                 </div>
-                <div class="alarm-form__section-2">
-                    <label for="alarm-name-input">Set Repeat Day:</label>
+                <div class="alarm-form__section-repeat-days">
+                    <label for="alarm-name-input" class="alarm-name-label">Set Repeat Day</label>
+                    <label class="date-toggle">
+                        <input type="checkbox">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34" fill="none">
+                                <path d="M19.5 5.09078V1.81143M19.5 5.09078V8.37014M19.5 5.09078H12.75M1.5 14.9288V29.6859C1.5 31.4971 2.84314 32.9653 4.5 32.9653H25.5C27.1569 32.9653 28.5 31.4971 28.5 29.6859V14.9288H1.5Z" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1.5 14.9288V8.37014C1.5 6.559 2.84314 5.09079 4.5 5.09079H7.5" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7.5 1.81143V8.37014" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M28.5 14.9288V8.37014C28.5 6.559 27.1569 5.09079 25.5 5.09079H24.75" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </label>      
                     <ul class="repeat-days">
-                        <label class="toggle">
+                        <!-- <label class="toggle">
                             <input type="checkbox">
                             <li><p>Mon</p></li>
                         </label>
@@ -66,9 +77,16 @@
                         <label class="toggle">
                             <input type="checkbox">
                             <li><p>Sun</p></li>
-                        </label>               
+                        </label>                -->
                     </ul>
                 </div>
+
+                <!-- <div class="alarm-form__section-alarm-days">
+                    <label for="alarm-name-input">Set Alarm Day:</label>
+                    <ul class="alarm-days">
+                        
+                    </ul>
+                </div> -->
             </div>
             <div class="Game Options">
 
