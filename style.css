@@ -437,8 +437,84 @@ button:hover {
 }
 
 
+/* Game Setting */
 
+.game-options {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.7fr 1.3fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "game-options-title game-options-title exit-button"
+        "game-selection-section-title game-choices game-choices"
+        "game-settings-title game-settings-title game-settings-title"
+        ". . .";
+    background-color: black;
+    position: absolute;
+    z-index: 2;
+    height: 298px;
+    width: 427px;
 
+  }
+  
+.game-options-title { 
+    grid-area: game-options-title; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exit-button { 
+    grid-area: exit-button; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-choices { 
+    grid-area: game-choices; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-selection-section-title { 
+    grid-area: game-selection-section-title; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-settings-title { 
+    grid-area: game-settings-title; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-settings-toggle{
+    display: flex;
+    flex-direction: column;
+}
+
+.game-settings-toggle-unchecked{
+    fill: #5C6B3B
+}
+
+.game-settings-toggle-checked{
+    fill: #B0E04A
+}
+
+.match-game-option-1{
+
+}
+.match-game-option-2{
+
+}
+.match-game-option-3{
+    
+}
 
 
 

@@ -61,33 +61,74 @@
                     </ul>
                 </div> -->
             </div>
-            <div class="Game Options">
-                <h3>Options</h3>
-                <span>
+            <div class="game-options">
+                <h3 class="game-options-title">Options</h3>
+                <span class="exit-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="39" height="36" viewBox="0 0 39 36" fill="none">
                         <path d="M2.17242 1.68558L37 34.3144M2.17242 34.3144L37 1.68558" stroke="#B0E04A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                </span>
-                <div class="game-selection">
-                    <h4>Game</h4>
-
-                </div>
+                </span>                    
+                <h4 class="game-selection-section-title">Game</h4>
+                <select name="game-choices" class="game-choices">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+                <h4 class="game-settings-title">Game Settings</h4>
+                <label class="game-settings-toggle">
+                    3 sets
+                    <input type="checkbox">
+                    <span class="match-game-option-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
+                            <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066"/>
+                            <rect x="0.362305" y="48.6382" width="20.1724" height="35.3618"/>
+                            <rect x="29.8452" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="29.8452" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="59.3276" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="59.3276" y="48.6382" width="19.3966" height="35.3618"/>
+                          </svg>
+                    </span>
+                </label>
+                <label class="game-settings-toggle">
+                    4 sets
+                    <input type="checkbox">
+                    <span class="match-game-option-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
+                            <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"/>
+                            <rect x="0.603516" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="30.0864" y="0.940826" width="18.6207" height="37.0066"/>
+                            <rect x="30.0864" y="48.6382" width="18.6207" height="35.3618"/>
+                            <rect x="59.5688" y="0.940826" width="18.6207" height="37.0066"/>
+                            <rect x="88.2759" y="0.940826" width="20.1724" height="37.0066"/>
+                            <rect x="59.5688" y="48.6382" width="18.6207" height="35.3618"/>
+                            <rect x="88.2759" y="48.6382" width="20.1724" height="35.3618"/>
+                        </svg>
+                    </span>
+                </label>
+                <label class="game-settings-toggle">
+                    5 sets
+                    <input type="checkbox">
+                    <span class="match-game-option-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
+                            <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"/>
+                            <rect x="0.448242" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="29.9312" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="29.9312" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="59.4136" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="88.1206" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="117.604" y="0.940826" width="19.3966" height="37.0066"/>
+                            <rect x="59.4136" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="88.1206" y="48.6382" width="19.3966" height="35.3618"/>
+                            <rect x="117.604" y="48.6382" width="19.3966" height="35.3618"/>
+                        </svg>
+                    </span>
+                </label>
+            </div>
+                <div class="game-settings-options">
+                    
                 <div class="game-settings">
-                    <h4 >Game Settings</h4>
-                    <div class="game-settings-options">
-                        <label class="toggle">
-                            <input type="checkbox">
-                            <li class="match-game-option"><p>Mon</p></li>
-                        </label>
-                        <label class="toggle">
-                            <input type="checkbox">
-                            <li class="match-game-option"><p>Mon</p></li>
-                        </label>
-                        <label class="toggle">
-                            <input type="checkbox">
-                            <li class="match-game-option"><p>Mon</p></li>
-                        </label>
-                    </div>
+                    
+                    
                 </div>
             </div>
         </div>

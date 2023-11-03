@@ -78,6 +78,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
+    document.querySelectorAll('.game-settings-toggle input').forEach(btn => {
+        btn.addEventListener('change', function () {
+            if (this.checked) {
+                // Checkbox is checked
+                console.log("Checkbox is checked");
+                console.log(document.querySelector(`.${btn.nextElementSibling.className}`));
+                document.querySelectorAll(`.${btn.nextElementSibling.className} span svg rect`).forEach(card => {
+                    card.classList.add('game-settings-toggle-checked');
+                })
+                
+              } else {
+                // Checkbox is unchecked
+                console.log("Checkbox is unchecked");
+                document.querySelectorAll(`${btn.nextElementSibling.className} span svg rect`).forEach(card => {
+                    card.classList.remove('game-settings-toggle-checked');
+                })
+              }
+        });
+    })
+
     // Alarm Days
 
     function getDaysInMonth(year, month) {
