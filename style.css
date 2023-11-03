@@ -417,7 +417,7 @@ button {
     color: var(--font-color-dark);
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 15px 70px;
     margin-top: 10px;
     cursor: pointer;
     position: relative;
@@ -435,6 +435,12 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+
+
+
+
+
 
 /* Match game */
 

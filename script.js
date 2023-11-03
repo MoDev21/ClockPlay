@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
             $('.date-toggle span').html(repeatDayToggle);
             $('.alarm-form__section-repeat-days').css({    
-                'height': '275px'});
+                'height': '285px'});
 
         }
     });
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set a timeout to trigger the alarm when the time is up
         setTimeout(function () {
             matchGame();
-        },  timeUntilAlarm);
+        },  );
 
 
 
@@ -367,7 +367,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let gameContainer = document.createElement('div');
         gameContainer.classList.add('game-container');
         mainContainer.appendChild(gameContainer);
-
+        
+        //Creates the game title
         let title = document.createElement('h1');
         title.classList.add('gameTitle');
         title.innerText = 'Wake up'
@@ -389,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         
         // Generates the match game cards
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             const matchCard = document.createElement('div');
 
             
@@ -400,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //This line will be used when i create settings for the game
             //if (assingedLetterNum > (cardAmounts - (cardAmounts / 2))){
 
-            if (assingedLetterNum > 4){
+            if (assingedLetterNum > 3){
                 assingedLetterNum = 1;
                 
             }
@@ -414,17 +415,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 case 2:
                     matchCard.setAttribute('data-card', 'B');
-                    console.log(matchCard);  
+                    console.log(assingedLetterNum);  
                     break;
 
                 case 3:
                     matchCard.setAttribute('data-card', 'C');
-                    console.log(matchCard);
+                    console.log(assingedLetterNum);
                     break;
 
                 case 4:
                     matchCard.setAttribute('data-card', 'D');
-                    console.log(matchCard);
+                    console.log(assingedLetterNum);
                     break;
 
                 case 5:
@@ -532,7 +533,7 @@ document.addEventListener('DOMContentLoaded', function () {
             matchCountNumber += 1;
             //This line will be used when i create settings for the game
             //if (matchCountNumber == (cardAmounts - (cardAmounts/2))) {     
-            if (matchCountNumber == 4) {        
+            if (matchCountNumber == 3) {        
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
                         gameContainer.classList.add('remove-game')
