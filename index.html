@@ -75,56 +75,58 @@
                     <option value="option3">Option 3</option>
                 </select>
                 <h4 class="game-settings-title">Game Settings</h4>
-                <label class="game-settings-toggle">
-                    3 sets
-                    <input type="checkbox">
-                    <span class="match-game-option-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
-                            <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066"/>
-                            <rect x="0.362305" y="48.6382" width="20.1724" height="35.3618"/>
-                            <rect x="29.8452" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="29.8452" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="59.3276" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="59.3276" y="48.6382" width="19.3966" height="35.3618"/>
-                          </svg>
-                    </span>
-                </label>
-                <label class="game-settings-toggle">
-                    4 sets
-                    <input type="checkbox">
-                    <span class="match-game-option-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
-                            <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"/>
-                            <rect x="0.603516" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="30.0864" y="0.940826" width="18.6207" height="37.0066"/>
-                            <rect x="30.0864" y="48.6382" width="18.6207" height="35.3618"/>
-                            <rect x="59.5688" y="0.940826" width="18.6207" height="37.0066"/>
-                            <rect x="88.2759" y="0.940826" width="20.1724" height="37.0066"/>
-                            <rect x="59.5688" y="48.6382" width="18.6207" height="35.3618"/>
-                            <rect x="88.2759" y="48.6382" width="20.1724" height="35.3618"/>
-                        </svg>
-                    </span>
-                </label>
-                <label class="game-settings-toggle">
-                    5 sets
-                    <input type="checkbox">
-                    <span class="match-game-option-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
-                            <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"/>
-                            <rect x="0.448242" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="29.9312" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="29.9312" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="59.4136" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="88.1206" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="117.604" y="0.940826" width="19.3966" height="37.0066"/>
-                            <rect x="59.4136" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="88.1206" y="48.6382" width="19.3966" height="35.3618"/>
-                            <rect x="117.604" y="48.6382" width="19.3966" height="35.3618"/>
-                        </svg>
-                    </span>
-                </label>
+                <div class="game-settings-options">                
+                    <label class="game-settings-toggle">
+                        3 sets
+                        <input type="radio" class="1" name="game-settings-options-rbtn" value=3>
+                        <span class="match-game-option-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
+                                <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066" class="game-settings-toggle-unchecked"/>
+                                <rect x="0.362305" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.8452" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.8452" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.3276" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.3276" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>
+                    <label class="game-settings-toggle">
+                        4 sets
+                        <input type="radio" class="2" name="game-settings-options-rbtn" value=4>
+                        <span class="match-game-option-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
+                                <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="0.603516" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="30.0864" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="30.0864" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.5688" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.2759" y="0.940826" width="20.1724" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.5688" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.2759" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>
+                    <label class="game-settings-toggle">
+                        5 sets
+                        <input type="radio" class="3" name="game-settings-options-rbtn" value=5>
+                        <span class="match-game-option-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
+                                <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="0.448242" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.9312" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.9312" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.4136" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.1206" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="117.604" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.4136" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.1206" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="117.604" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>
+                </div>
             </div>
-                <div class="game-settings-options">
+               
                     
                 <div class="game-settings">
                     

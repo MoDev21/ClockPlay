@@ -78,23 +78,54 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
-    document.querySelectorAll('.game-settings-toggle input').forEach(btn => {
-        btn.addEventListener('change', function () {
-            if (this.checked) {
-                // Checkbox is checked
-                console.log("Checkbox is checked");
-                console.log(document.querySelector(`.${btn.nextElementSibling.className}`));
-                document.querySelectorAll(`.${btn.nextElementSibling.className} span svg rect`).forEach(card => {
-                    card.classList.add('game-settings-toggle-checked');
-                })
+ 
+    
+
+    function checkOne(checkbox) {
+        let checkboxes = document.querySelectorAll('.game-settings-toggle input');
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != checkbox) {
+                if (checkbox.checked) {
+                    // Checkbox is checked
+                    console.log("Checkbox wiht value " + checkbox.value +" is checked");
+                    checkvalue = checkbox.value;
+                    document.querySelectorAll(`.${checkbox.nextElementSibling.className} svg rect`).forEach(card => {
+                        card.classList.add('game-settings-toggle-checked');
+                    })
+                } 
+
+            }
                 
-              } else {
+        }
+
+        //Remove class from unchecked buttons
+        checkboxes.forEach(cbx => {
+            console.log(cbx.checked);
+            if(!cbx.checked){
                 // Checkbox is unchecked
-                console.log("Checkbox is unchecked");
-                document.querySelectorAll(`${btn.nextElementSibling.className} span svg rect`).forEach(card => {
+                document.querySelectorAll(`.${cbx.nextElementSibling.className} svg rect`).forEach(card => {
                     card.classList.remove('game-settings-toggle-checked');
                 })
-              }
+                
+            }
+        })
+
+        
+        
+    }
+
+    function getcheckvalue(value) {
+        console.log(value);
+        return value
+    }
+
+    function gameSettingCheckboxChange() {  }
+    document.querySelectorAll('.game-settings-toggle input').forEach(btn => {
+        var checkboxes = document.querySelectorAll('.game-settings-toggle input'); 
+        // document.querySelectorAll(`.${btn.nextElementSibling.className} svg rect`).classList.add('game-settings-toggle-unchecked');
+        btn.addEventListener('change', function () {
+            checkOne(btn);
+            console.log('check value ' + checkvalue);
         });
     })
 
@@ -250,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Get the selected alarm time from the input field
         const alarmTime = alarmTimeInput.value;
         const alarmName = alarmNameInput.value;
-
+   
         if (alarmTime) {
             // If a valid time is selected, call the setAlarm function
             setAlarm(alarmTime, alarmName);
@@ -406,11 +437,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let matchCountNumber = 0;
 
         
-
+        gameDisplay.style.gridTemplateColumns = `repeat(${checkvalue}, 1fr)`;
         
         
         // Generates the match game cards
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < (checkvalue * 2); i++) {
             const matchCard = document.createElement('div');
 
             
@@ -421,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //This line will be used when i create settings for the game
             //if (assingedLetterNum > (cardAmounts - (cardAmounts / 2))){
 
-            if (assingedLetterNum > 3){
+            if (assingedLetterNum > checkvalue){
                 assingedLetterNum = 1;
                 
             }
@@ -473,7 +504,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function shuffleCards() {
             let matchCards = document.querySelectorAll('.match-card')
             matchCards.forEach(matchCard => {
-                let randomPos = Math.floor(Math.random() * 8);
+                let randomPos = Math.floor(Math.random() * (checkvalue * 2));
                 matchCard.style.order = randomPos;
             });
         }
@@ -553,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
             matchCountNumber += 1;
             //This line will be used when i create settings for the game
             //if (matchCountNumber == (cardAmounts - (cardAmounts/2))) {     
-            if (matchCountNumber == 3) {        
+            if (matchCountNumber == checkvalue) {        
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
                         gameContainer.classList.add('remove-game')

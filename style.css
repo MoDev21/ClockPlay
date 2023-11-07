@@ -449,7 +449,7 @@ button:hover {
         "game-options-title game-options-title exit-button"
         "game-selection-section-title game-choices game-choices"
         "game-settings-title game-settings-title game-settings-title"
-        ". . .";
+        "game-settings-options game-settings-options game-settings-options";
     background-color: black;
     position: absolute;
     z-index: 2;
@@ -496,6 +496,15 @@ button:hover {
 .game-settings-toggle{
     display: flex;
     flex-direction: column;
+    scale: 0.8;
+}
+
+.game-settings-toggle input{
+    
+}
+
+.game-settings-toggle span svg rect{
+    border-radius: 20px;
 }
 
 .game-settings-toggle-unchecked{
@@ -516,7 +525,13 @@ button:hover {
     
 }
 
-
+.game-settings-options{
+    grid-area: game-settings-options;
+    display: flex;
+    justify-content: center;
+    gap: 11px;
+    margin-left: 16px;
+}
 
 /* Match game */
 
@@ -569,12 +584,8 @@ button:hover {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 0px 0px;
-    grid-template-areas:
-        ". . . ."
-        ". . . .";
     gap: 10px;
-    width: 700px;
+    width: auto;
     margin: auto;
     opacity: 0;
     animation-name: game-display-animation;
@@ -597,7 +608,7 @@ button:hover {
 .match-card{
     background-color: #141414;
     height: 230px;
-    width: 100%;
+    width: 150px;
     transition: 0.5s;
     display: flex;
     align-items: center;
