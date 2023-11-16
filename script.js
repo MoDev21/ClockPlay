@@ -3,16 +3,14 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // DOM elements
+
+    //Alarm Settings variables
     const alarmTimeInput = document.getElementById('alarm-time');
     const alarmNameInput = document.getElementById('alarm-name-input');
     const setAlarmButton = document.getElementById('set-alarm');
     const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
     const repeatDateName = document.querySelectorAll('.repeat-days label li');
     const btn_alarmDays = document.querySelectorAll('.alarm-days label input');
-    const mainClock = document.querySelector('.main-clock__time');
-    const mainClock_seconds = document.querySelector('.main-clock__secondes svg circle:nth-child(2)');
-    const mainContainer = document.querySelector('.main-container')
-
     const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     const monthText = ['January','February','March','April','May','June','July','August','September','October','November','December',];
     var repeatDaysArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -20,13 +18,22 @@ document.addEventListener('DOMContentLoaded', function () {
     var repearDaysString;
     var days = [];
     var alarmArray = [];
+    var checkvalue;
+
+    //Main clock variables
+    const mainClock = document.querySelector('.main-clock__time');
+    const mainClock_seconds = document.querySelector('.main-clock__secondes svg circle:nth-child(2)');
+    const mainContainer = document.querySelector('.main-container')
     const GlobalDate = new Date();
+
+
+  
     //options for MatchGame
     const cardLetterArray = ['A','B','C','D','E'];
     const cardAmounts = 0;
 
 
-
+    //Were the set alarms are put 
     $.ajax({
         url: "json/alarms.json",
         data: "data",
@@ -39,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
 
-
+    //Show the current time
     function showTime() { 
         const today = new Date();
         let hours = today.getHours();
@@ -49,9 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
         minutes = checkTime(minutes);
         seconds = checkTime(seconds) * (100/60);
         //Light green s
-        mainClock_seconds.style.strokeDashoffset = `calc(1540 - ((1540 * ${seconds}) / 100))`;
+        mainClock_seconds.style.strokeDashoffset = `calc(1540px - ((1540px * ${seconds}) / 100))`;
+        
         mainClock.innerHTML =  `${hours}:${minutes}`;
-        setTimeout(showTime, 1000)
+        setTimeout(showTime, 1000);
     }
 
     showTime();
@@ -79,8 +87,100 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
  
-    
+    async function generateMatchGameSettingsOptions() {
+        
+        let gameSettingOption = document.querySelector('.game-settings-options');
+        let option;
+        let optionValue = 0;
+        $(gameSettingOption).html('');
+        for (let i = 0; i < 3; i++) {
+            optionValue++;
 
+            //I generate the html this way 
+            switch (optionValue) {
+                case 1:
+                    option = `
+                    <label class="game-settings-toggle">
+                        3 sets
+                        <input type="radio" class="1" name="game-settings-options-rbtn" value=3>
+                        <span class="match-game-option-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
+                                <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066" class="game-settings-toggle-unchecked"/>
+                                <rect x="0.362305" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.8452" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.8452" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.3276" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.3276" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>`;                                
+                    $(gameSettingOption).append(option);
+                    console.log(optionValue);
+                    break;
+    
+                case 2:
+                    option = `
+                    <label class="game-settings-toggle">
+                    4 sets
+                    <input type="radio" class="2" name="game-settings-options-rbtn" value=4>
+                        <span class="match-game-option-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
+                                <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="0.603516" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="30.0864" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="30.0864" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.5688" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.2759" y="0.940826" width="20.1724" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.5688" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.2759" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>`;                                
+                    $(gameSettingOption).append(option);
+                    console.log(optionValue);
+                    break;
+    
+                case 3:
+                    option = `
+                    <label class="game-settings-toggle">
+                        5 sets
+                        <input type="radio" class="3" name="game-settings-options-rbtn" value=5>
+                        <span class="match-game-option-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
+                                <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="0.448242" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.9312" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="29.9312" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.4136" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.1206" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="117.604" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
+                                <rect x="59.4136" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="88.1206" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                                <rect x="117.604" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
+                            </svg>
+                        </span>
+                    </label>`;                                
+                    $(gameSettingOption).append(option);
+                    console.log(optionValue);
+                    break;
+            
+                default:
+                    break;
+            };
+
+            $(".game-settings-toggle").delay(50).each(function(i) {
+                $(this).delay(150 * i).queue(function() {
+                  $(this).addClass("game-settings-toggle-animation");
+                })
+            })
+            
+        }
+
+
+    }
+
+
+    //Game Match Game Settings
     function checkOne(checkbox) {
         let checkboxes = document.querySelectorAll('.game-settings-toggle input');
         for (let i = 0; i < checkboxes.length; i++) {
@@ -109,35 +209,86 @@ document.addEventListener('DOMContentLoaded', function () {
                 
             }
         })
-
-        
-        
     }
 
-    function getcheckvalue(value) {
-        console.log(value);
-        return value
-    }
+    var selectElement = document.querySelector('.game-choices');
 
-    function gameSettingCheckboxChange() {  }
-    document.querySelectorAll('.game-settings-toggle input').forEach(btn => {
-        var checkboxes = document.querySelectorAll('.game-settings-toggle input'); 
-        // document.querySelectorAll(`.${btn.nextElementSibling.className} svg rect`).classList.add('game-settings-toggle-unchecked');
-        btn.addEventListener('change', function () {
-            checkOne(btn);
+    function activeGameOption() {
+            // Get the value of the selected option
+            let gameSettingOption = document.querySelector('.game-options');
+            let gameSettingTitle = document.querySelector('.game-settings-title')
+            var selectedOptionValue = selectElement.value;
+            switch (selectedOptionValue) {
+                case "Match_Game":
+
+                    $('.game-settings-title').css("display","block");
+                    gameSettingOption.style.height = `291px`;
+                    generateMatchGameSettingsOptions();
+                    console.log('Selected option value: ' + selectedOptionValue);
+                    break;
+    
+                case "Math_Equation":
+                    $('.game-settings-title').css("display","block");
+                    gameSettingOption.style.height = `291px`;
+                    console.log('Selected option value: ' + selectedOptionValue);
+                    break;
+            
+                default:
+                    gameSettingOption.style.gridTemplateRows = `0fr 0fr`;
+                    gameSettingOption.style.height = `141px`;
+                    $('.game-settings-title').css("display","none");
+                    $(document.querySelector('.game-settings-options')).html('');
+                    console.log('Selected option value: none');
+             
+            }
+    }
+    activeGameOption();
+
+    // Add an event listener for the 'change' event
+    selectElement.addEventListener('change', function() {
+        activeGameOption()
+        // Now you can use the value of the selected option
+        
+    });
+
+    document.addEventListener("change", function(e){
+        const target = e.target.closest(".game-settings-toggle input"); // Or any other selector.
+      
+        if(target){
+            checkOne(target);
             console.log('check value ' + checkvalue);
-        });
-    })
+        }
+    });
+
+    // document.querySelectorAll('.game-settings-toggle input').forEach(btn => {
+
+    //     btn.addEventListener('change', function () {
+    //         checkOne(btn);
+    //         console.log('check value ' + checkvalue);
+    //     });
+    // })
+
+    // document.querySelector('.exit-button').addEventListener('click', function () {
+    //     let gameOption = document.querySelector('.game-options');
+    //     gameOption.style.display = 'none';
+    // })
+
+    // document.querySelector('.parameter-btn').addEventListener('click', function () {
+    //     let gameOption = document.querySelector('.game-options');
+    //     gameOption.style.display = 'grid';
+    // })
 
     // Alarm Days
 
     function getDaysInMonth(year, month) {
         // Create a new date object for the first day of the given month
         const date = new Date(year, month, 1);
+
+        // Empties the array
         days = [];
         
     
-        // Continue adding days to the array while the month is the same
+        // Continue adding days to the days array while the month is the same
         while (date.getMonth() === month) {
             
             days.push(new Date(date).getDate());
@@ -150,9 +301,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getDaysInWeek() {
-        // Create a new date object for the first day of the given month
-
+        //Empties the array
         days = [];
+
+        // Continue adding days to the days array for each day that present in the repeatDaysArray
         repeatDaysArray.forEach(e => {
             days.push(e);
 
@@ -162,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     var switcher = false
-    // var modeSwitcher = document.querySelector('.date-toggle')
+
 
 
     document.querySelector('.date-toggle input').addEventListener('change', function () {
@@ -213,17 +365,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    // mainClock.addEventListener('click', function () { 
-    //     console.log('clock ' + switcher);
-    //     AlarmDateModeSwitcher(switcher);
-    //     generateDateToggleBtn()
-    // });
-
-
+    
 
     function generateDateToggleBtn() { 
         let repeatDay = document.querySelector('.alarm-form__section-repeat-days ul');
-        
+
         while (repeatDay.hasChildNodes()) {
             repeatDay.removeChild(repeatDay.firstChild);
         }
@@ -237,7 +383,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(repeatDay);
         });
 
-        document.querySelectorAll('.repeat-days label input').forEach(btn => {
+        let input = document.querySelectorAll('.repeat-days label input');
+        console.log(input);
+        
+        input.forEach(btn => {
             btn.nextElementSibling.classList.add('alarm-days-btn');
             btn.addEventListener('change', function () {
                 if (this.checked) {
@@ -252,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }); 
 
             $(".repeat-days label li").delay(50).each(function(i) {
-                $(this).delay(18 * i).queue(function() {
+                $(this).delay(25 * i).queue(function() {
                   $(this).addClass("show-alarm-days-btn");
                 })
             })
@@ -266,8 +415,6 @@ document.addEventListener('DOMContentLoaded', function () {
     generateDateToggleBtn();
 
 
-
-    
     /* I am going to work on it later */
     // repeatDateSwitcher();
 
@@ -282,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const alarmTime = alarmTimeInput.value;
         const alarmName = alarmNameInput.value;
    
-        if (alarmTime) {
+        if (alarmTime && checkvalue) {
             // If a valid time is selected, call the setAlarm function
             setAlarm(alarmTime, alarmName);
             console.log(alarmTime, alarmName);
@@ -490,7 +637,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             matchCard.classList.add('match-card');
             matchCard.addEventListener('click', () => {
-                const parameterValue = "Hello, World!";
                 flipCard(matchCard);
             });
 

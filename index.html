@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
@@ -15,6 +15,10 @@
         <div class="container">
             <h1>Alarm Clock App</h1>
 
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none" class="parameter-btn">
+                <path d="M26.4405 33.7726C30.4901 33.7726 33.7727 30.49 33.7727 26.4404C33.7727 22.3909 30.4901 19.1083 26.4405 19.1083C22.391 19.1083 19.1084 22.3909 19.1084 26.4404C19.1084 30.49 22.391 33.7726 26.4405 33.7726Z" stroke="#B0E04A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M45.0699 22.5187L42.3871 16.0406L45.9928 11.7762L41.1047 6.88809L36.8636 10.5125L30.2478 7.79175L28.7264 2H23.95L22.4056 7.86847L15.9418 10.5932L11.7762 6.88809L6.88809 11.7762L10.4402 16.1482L7.7985 22.6431L2 23.9964V28.8845L7.86842 30.4866L10.5927 36.9491L6.88809 41.1047L11.7762 45.9928L16.1539 42.4252L22.5226 45.0453L23.9964 50.8809H28.8845L30.3619 45.0475L36.8401 42.3646C37.9199 43.1365 41.1047 45.9928 41.1047 45.9928L45.9928 41.1047L42.3656 36.8262L45.0492 30.346L50.8807 28.8288L50.8809 23.9964L45.0699 22.5187Z" stroke="#B0E04A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg> -->
 
             <h1 class="main-clock">
                 <div class="main-clock__background">
@@ -30,10 +34,10 @@
 
             <div class="alarm-form">
                 <div class="alarm-form__section-1">
-                    <label for="alarm-time">Set Alarm Time</label>
-                    <input type="time" id="alarm-time">
-                    <label for="alarm-name-input">Set Alarm Name</label>
-                    <input type="text" id="alarm-name-input">
+                    <!-- <label for="alarm-time">Set Alarm Time</label> -->
+                    <input type="time" id="alarm-time" ng-model="model.date" >
+                    <!-- <label for="alarm-name-input">Set Alarm Name</label> -->
+                    <input type="text" id="alarm-name-input" placeholder="Set Alarm Name">
                     <button id="set-alarm">Set Alarm</button>
                 </div>
                 <div class="alarm-form__section-repeat-days">
@@ -53,7 +57,25 @@
 
                     </ul>
                 </div>
-
+                <div class="game-options">
+                    <h3 class="game-options-title">Options</h3>
+                    <!-- will need it later -->
+                    <!-- <span class="exit-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="39" height="36" viewBox="0 0 39 36" fill="none">
+                            <path d="M2.17242 1.68558L37 34.3144M2.17242 34.3144L37 1.68558" stroke="#B0E04A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>                     -->
+                    <h4 class="game-selection-section-title">Game</h4>
+                    <select name="game-choices" class="game-choices">
+                        <option value="None">None</option>
+                        <option value="Match_Game">Match Game</option>
+                        <option value="Math_Equation">Math Equation</option>
+                    </select>
+                    <h4 class="game-settings-title">Game Settings</h4>
+                    <div class="game-settings-options">                
+                        
+                    </div>
+                </div>
                 <!-- <div class="alarm-form__section-alarm-days">
                     <label for="alarm-name-input">Set Alarm Day:</label>
                     <ul class="alarm-days">
@@ -61,71 +83,7 @@
                     </ul>
                 </div> -->
             </div>
-            <div class="game-options">
-                <h3 class="game-options-title">Options</h3>
-                <span class="exit-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="39" height="36" viewBox="0 0 39 36" fill="none">
-                        <path d="M2.17242 1.68558L37 34.3144M2.17242 34.3144L37 1.68558" stroke="#B0E04A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>                    
-                <h4 class="game-selection-section-title">Game</h4>
-                <select name="game-choices" class="game-choices">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                </select>
-                <h4 class="game-settings-title">Game Settings</h4>
-                <div class="game-settings-options">                
-                    <label class="game-settings-toggle">
-                        3 sets
-                        <input type="radio" class="1" name="game-settings-options-rbtn" value=3>
-                        <span class="match-game-option-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
-                                <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066" class="game-settings-toggle-unchecked"/>
-                                <rect x="0.362305" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="29.8452" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="29.8452" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.3276" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.3276" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                            </svg>
-                        </span>
-                    </label>
-                    <label class="game-settings-toggle">
-                        4 sets
-                        <input type="radio" class="2" name="game-settings-options-rbtn" value=4>
-                        <span class="match-game-option-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
-                                <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="0.603516" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="30.0864" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="30.0864" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.5688" y="0.940826" width="18.6207" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="88.2759" y="0.940826" width="20.1724" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.5688" y="48.6382" width="18.6207" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="88.2759" y="48.6382" width="20.1724" height="35.3618"class="game-settings-toggle-unchecked"/>
-                            </svg>
-                        </span>
-                    </label>
-                    <label class="game-settings-toggle">
-                        5 sets
-                        <input type="radio" class="3" name="game-settings-options-rbtn" value=5>
-                        <span class="match-game-option-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
-                                <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="0.448242" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="29.9312" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="29.9312" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.4136" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="88.1206" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="117.604" y="0.940826" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
-                                <rect x="59.4136" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="88.1206" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                                <rect x="117.604" y="48.6382" width="19.3966" height="35.3618"class="game-settings-toggle-unchecked"/>
-                            </svg>
-                        </span>
-                    </label>
-                </div>
-            </div>
+
                
                     
                 <div class="game-settings">
