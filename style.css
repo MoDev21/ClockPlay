@@ -612,6 +612,53 @@ button:hover {
     margin-left: 16px;
 }
 
+.operands_select{
+    height: 35px;
+    width: 80px;
+    background-color: #0b0b0b;
+    border-style: none;
+    color: var(--accent-color);
+    outline: none;
+    border-radius: 10px;
+}
+
+.operator{
+    height: 25px;
+    width: 70px;
+}
+
+.operand{
+    position: relative;
+    opacity: 0;
+}
+
+
+.operands::after{
+    position: relative;
+    content: 'digit';
+}
+
+.game-display-operand{
+    color: #141414;
+    font-size: 10.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-display-operand input{
+    color: #141414;
+    font-size: 10.5rem;
+    width: 200px;
+    background: #c1eb99;
+    border-bottom: #141414;
+    border-style: groove;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: dotted;
+    border-left-style: none;
+    border-bottom-width: 12px;
+}
 /* Match game */
 
 .game-container{
