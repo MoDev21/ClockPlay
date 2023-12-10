@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // var repearDaysString;
     var days = [];
     var alarmArray = [];
-    var checkMatchGameSettingsvalue;
+    var checkMatchGameSettingsValue;
 
     //Main clock variables
     const mainClock = document.querySelector('.main-clock__time');
@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Game Selection variables
     var gameSelection = document.querySelector('.game-choices');
+
+
 
     //Were the set alarms are put 
     $.ajax({
@@ -94,8 +96,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let gameSettingOption = document.querySelector('.game-settings-options');
         let option;
         let optionValue = 0;
-        $('.game-settings-options').css('gap', '11px');
-        $(gameSettingOption).html('');
+
+        
+
+        gameSettingOption.style.gap = '11px';
+        // $('.game-settings-options').css('gap', '11px');
+        gameSettingOption.innerHTML = '';
         for (let i = 0; i < 3; i++) {
             optionValue++;
             //I generate the html this way 
@@ -104,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     option = `
                     <label class="game-settings-toggle">
                         3 sets
-                        <input type="radio" class="1" name="game-settings-options-rbtn" value=3>
+                        <input type="radio" class="1" name="game-settings-options-rbtn" value=3 />
                         <span class="match-game-option-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="79" height="84" viewBox="0 0 79 84" fill="none">
                                 <rect x="0.362305" y="0.940796" width="20.1724" height="37.0066" class="game-settings-toggle-unchecked"/>
@@ -124,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     option = `
                     <label class="game-settings-toggle">
                     4 sets
-                    <input type="radio" class="2" name="game-settings-options-rbtn" value=4>
+                    <input type="radio" class="2" name="game-settings-options-rbtn" value=4 />
                         <span class="match-game-option-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="109" height="84" viewBox="0 0 109 84" fill="none">
                                 <rect x="0.603516" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
@@ -146,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     option = `
                     <label class="game-settings-toggle">
                         5 sets
-                        <input type="radio" class="3" name="game-settings-options-rbtn" value=5>
+                        <input type="radio" class="3" name="game-settings-options-rbtn" value=5 />
                         <span class="match-game-option-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="137" height="84" viewBox="0 0 137 84" fill="none">
                                 <rect x="0.448242" y="0.940796" width="19.3966" height="37.0066"class="game-settings-toggle-unchecked"/>
@@ -184,7 +190,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function generateMathEquationSettingsOptions() {
         let gameSettingOption = document.querySelector('.game-settings-options');
-        $('.game-settings-options').css('gap', '30px');
+        gameSettingOption.style.gap = '30px';
+
 
         let operator = `<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
                             <path d="M2.66101 16.9931H17M17 16.9931H31.339M17 16.9931V2.65405M17 16.9931V31.3321" stroke="#B0E04A" stroke-width="3.58475" stroke-linecap="round" stroke-linejoin="round"/>
@@ -194,9 +201,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         let option = `  
                         <div class="operand">
-                            <select name="operand 1" class="operands_select">
-                                <option value="1">1 digit</option>
-                                <option value="2">2 digit</option>
+                            <select name="operand_1" class="operands_select">
+                                <option value="1">max 1 digit</option>
+                                <option value="2">max 2 digit</option>
                             </select>
                         </div>
                         
@@ -206,9 +213,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
 
                         <div class="operand">
-                            <select name="operand 2" class="operands_select">
-                                <option value="1">1 digit</option>
-                                <option value="2">2 digit</option>
+                            <select name="operand_2" class="operands_select">
+                                <option value="1">max 1 digit</option>
+                                <option value="2">max 2 digit</option>
                             </select>
                         </div>`;
         let optionValue = 0; 
@@ -223,20 +230,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    function MathGameOption() {
-        
-    }
+  
+
+
 
 
     //Game Match Game Settings
     function checkNumberofMatch(checkbox) {
         let checkboxes = document.querySelectorAll('.game-settings-toggle input');
+        console.log(checkboxes[0]);
         for (let i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i] != checkbox) {
                 if (checkbox.checked) {
                     // Checkbox is checked
                     console.log("Checkbox wiht value " + checkbox.value +" is checked");
-                    checkMatchGameSettingsvalue = checkbox.value;
+                    checkMatchGameSettingsValue = checkbox.value;
                     document.querySelectorAll(`.${checkbox.nextElementSibling.className} svg rect`).forEach(card => {
                         card.classList.add('game-settings-toggle-checked');
                     })
@@ -259,7 +267,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    
 
     function activeGameOption() {
             // Get the value of the selected option
@@ -272,11 +279,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     gameSettingTitle.style.display = "block";
                     gameSettingOption.style.height = `291px`;
                     generateMatchGameSettingsOptions();
+                    checkDefaultNumberofMatch();
                     console.log('Selected option value: ' + selectedOptionValue);
                     break;
     
                 case "Math_Equation":
-                    $(gameSettingTitle).css("display","block");
+                    gameSettingTitle.style.display = "block";
                     gameSettingOption.style.height = `291px`;
                     generateMathEquationSettingsOptions();
                     console.log('Selected option value: ' + selectedOptionValue);
@@ -285,13 +293,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 default:
                     gameSettingOption.style.gridTemplateRows = `0fr 0fr`;
                     gameSettingOption.style.height = `141px`;
-                    $('.game-settings-title').css("display","none");
+                    gameSettingTitle.style.display = "none";
                     $(document.querySelector('.game-settings-options')).html('');
                     console.log('Selected option value: none');
              
             }
     }
     activeGameOption();
+
+
+
+    function checkDefaultNumberofMatch() {
+        let checkboxes = document.querySelectorAll('.game-settings-toggle input');
+        checkboxes[0].checked = true;
+        console.log(checkboxes[0]);
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkMatchGameSettingsValue = checkboxes[i].value;
+                document.querySelectorAll(`.${checkboxes[i].nextElementSibling.className} svg rect`).forEach(card => {
+                    card.classList.add('game-settings-toggle-checked');
+                })
+            }
+                
+        }
+
+    }
+
+
+
 
     // Add an event listener for the 'change' event
     gameSelection.addEventListener('change', function() {
@@ -304,9 +333,54 @@ document.addEventListener('DOMContentLoaded', function () {
         const target = e.target.closest(".game-settings-toggle input"); // Or any other selector.
         if(target){
             checkNumberofMatch(target);
-            console.log('check value ' + checkMatchGameSettingsvalue);
+            console.log('check value ' + checkMatchGameSettingsValue);
         }
     });
+
+
+
+    var operands1Selection = document.querySelector(".operands_select[name='operand_1']");
+    var operands2Selection = document.querySelector(".operands_select[name='operand_2']");
+    var selectedOptionValue;
+    operands1Selection.addEventListener('change', function () {
+        selectedOptionValue = operands1Selection.value;
+        switch (selectedOptionValue) {
+            case "1":
+                console.log('Selected option value: ' + selectedOptionValue);
+                break;
+
+            case "2":
+                console.log('Selected option value: ' + selectedOptionValue);
+                break;
+        
+            default:
+                console.log('Selected option value: none');
+         
+        }
+    });
+
+    
+
+    operands2Selection.addEventListener('change', function () {
+        selectedOptionValue = operands2Selection.value;
+        switch (selectedOptionValue) {
+            case "1":
+                console.log('Selected option value: ' + selectedOptionValue);
+                break;
+
+            case "2":
+                console.log('Selected option value: ' + selectedOptionValue);
+                break;
+        
+            default:
+                console.log('Selected option value: none');
+         
+        }
+    });
+
+
+
+    
 
 
     // Alarm Days
@@ -463,7 +537,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (alarmTime && selectedOptionValue) {
             // If a valid time is selected, call the setAlarm function
             setAlarm(alarmTime, alarmName);
-            console.log(alarmTime, alarmName);
         } else {
             // Show an alert if no valid time is selected
             alert('Please select a valid alarm time.');
@@ -476,15 +549,18 @@ document.addEventListener('DOMContentLoaded', function () {
         let setClockTime = document.createElement('div');
         let alarmDates = document.createElement('div');
         let alarmTimeHolder = document.createElement('div');
-        
-        
+        let exitBtn = document.createElement('div');
+        exitBtn.classList.add("set-alarm-exit"); 
+        exitBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+                                <path d="M1 19.5862L10.2931 10.2931M10.2931 10.2931L19.5862 1M10.2931 10.2931L1 1M10.2931 10.2931L19.5862 19.5862" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>`;
 
         // Get the current time
         const now = new Date();
 
         // Combine the current date and selected alarm time to create a Date object
         const alarmDate = new Date(now.toDateString() + ' ' + alarmTime);
-        console.log(alarmDate);
+
         // Get the current time in milliseconds
         const currentTime = now.getTime();
 
@@ -509,10 +585,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
             
                 default:
-                    
+                    alert('Wake up.');
+                    break;
              
             }
-        },  );
+        }, );
 
 
 
@@ -523,6 +600,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //writes the chosen alarm
         alarmTimeHolder.innerHTML = `${checkTime(alarmDate.getHours())}:${checkTime(alarmDate.getMinutes())}`;
         alarmTimeHolder.classList.add('alarmTimeHolder');
+
 
         setClockTime.classList.add('set-alarm');
         
@@ -570,33 +648,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         alarmDates.classList.add('alarm-dates');
 
+        let sidebar = document.querySelector('.sidebar')
   
-        document.querySelector('.sidebar').appendChild(setClockTime);
+        sidebar.appendChild(setClockTime);
+
+        // let alarmObject =   { 
+        //     time:alarmTimeHolder.textContent, 
+        //     title:alarmTItle.textContent, 
+        //     date:alarmDates
+        // }
+
+
+        // alarmArray.push(alarmObject);
 
         setClockTime.appendChild(alarmTimeHolder);
         setClockTime.appendChild(alarmTItle);
         setClockTime.appendChild(alarmDates);
+        setClockTime.appendChild(exitBtn);
 
+        exitBtn.addEventListener('click', function () {
+            this.parentNode.remove();
+            
+        })
 
-        
-        let alarmObject = { time:alarmTimeHolder.textContent, title:alarmTItle.textContent, date:alarmDates}
-
-
-        alarmArray.push(alarmObject);
         console.log(alarmArray);
         
 
-    }
+    }    
 
 
 
-    // function memorisationGame() {  
-    //     let gameSection = document.createElement('div');
-    //     let gameDisplay = document.createElement('div');
-        
-    // }
 
-    
+
 
 
     //function start the match game to dtop the alarm
@@ -628,22 +711,17 @@ document.addEventListener('DOMContentLoaded', function () {
         let matchCountNumber = 0;
 
         
-        gameDisplay.style.gridTemplateColumns = `repeat(${checkMatchGameSettingsvalue}, 1fr)`;
+        gameDisplay.style.gridTemplateColumns = `repeat(${checkMatchGameSettingsValue}, 1fr)`;
         
         
         // Generates the match game cards
-        for (let i = 0; i < (checkMatchGameSettingsvalue * 2); i++) {
-            const matchCard = document.createElement('div');
+        for (let i = 0; i < (checkMatchGameSettingsValue * 2); i++) {
 
-            
+            const matchCard = document.createElement('div');
             
             assingedLetterNum += 1;
 
-
-            //This line will be used when i create settings for the game
-            //if (assingedLetterNum > (cardAmounts - (cardAmounts / 2))){
-
-            if (assingedLetterNum > checkMatchGameSettingsvalue){
+            if (assingedLetterNum > checkMatchGameSettingsValue){
                 assingedLetterNum = 1;
                 
             }
@@ -694,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function shuffleCards() {
             let matchCards = document.querySelectorAll('.match-card')
             matchCards.forEach(matchCard => {
-                let randomPos = Math.floor(Math.random() * (checkMatchGameSettingsvalue * 2));
+                let randomPos = Math.floor(Math.random() * (checkMatchGameSettingsValue * 2));
                 matchCard.style.order = randomPos;
             });
         }
@@ -772,9 +850,10 @@ document.addEventListener('DOMContentLoaded', function () {
             let matchCards = document.querySelectorAll('.match-card');
             console.log(matchCountNumber);
             matchCountNumber += 1;
-            //This line will be used when i create settings for the game
-            //if (matchCountNumber == (cardAmounts - (cardAmounts/2))) {     
-            if (matchCountNumber == checkMatchGameSettingsvalue) {        
+            
+            //This line will be used when i create settings for the game   
+            if (matchCountNumber == checkMatchGameSettingsValue) {     
+                title.innerText = 'Congratulations'   
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
                         gameContainer.classList.add('remove-game')
@@ -813,8 +892,31 @@ document.addEventListener('DOMContentLoaded', function () {
         gameDisplay.classList.add('game-display');
         gameContainer.appendChild(gameDisplay);
 
-        let operand1 = Math.floor((Math.random() * 9) + 1);
-        let operand2 = Math.floor((Math.random() * 9) + 1);
+        let operand1;
+        let operand2;
+        
+        
+        if (operands1Selection.value == 2){
+            console.log(' Numbers of Digits ' + operands1Selection.value);
+            operand1 = Math.floor((Math.random() * 98) + 1);
+        }
+        else {
+            operand1 = Math.floor((Math.random() * 9) + 1);
+        }
+
+        if (operands2Selection.value == 2){
+            console.log(' Numbers of Digits ' + operands2Selection.value);
+            operand2 = Math.floor((Math.random() * 98) + 1);
+        }
+        else {
+            operand2 = Math.floor((Math.random() * 9) + 1);
+        }
+
+
+
+        let goodResult = operand1 + operand2
+        console.log(goodResult);
+
 
         gameDisplay.style.gridTemplateColumns = `repeat(5, 1fr)`;
 
@@ -825,6 +927,42 @@ document.addEventListener('DOMContentLoaded', function () {
         $(gameDisplay).append(`<div class="game-display-operand">
                                     <input type="number" class="math-game-result">
                                 <div>`)
+
+        
+        let mathGameResultDiv = gameContainer.querySelector('.math-game-result');
+        
+        mathGameResultDiv.addEventListener('change', function () {
+            let userResult = mathGameResultDiv.value
+            mathGameResultDiv.value
+            console.log('listening');
+            if (goodResult == userResult){
+                console.log(goodResult + ' = ' + userResult);
+                title.classList.add('game-congratulation-title');
+                title.innerText = 'Congratulations'
+                gameContainer.style.backgroundColor = 'rgb(221, 240, 204)';
+                setTimeout(() => {
+                    gameContainer.style.backgroundColor = '';
+                }, 500)
+                //Remove the game
+                setTimeout(() => {
+                    gameContainer.classList.add('remove-game')
+                    setTimeout(() => {
+                        mainContainer.removeChild(gameContainer);
+                    }, 2000)
+                }, 1500);
+            }
+            else{
+                console.log('UserResult ' + userResult);
+                gameContainer.style.backgroundColor = 'red';
+                setTimeout(() => {
+                    gameContainer.style.backgroundColor = '';
+                }, 500)
+            }
+        }); 
+        
+        
+        
+
 
     }
 

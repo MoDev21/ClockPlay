@@ -317,6 +317,17 @@ body {
     margin: 10px 0px;
 }
 
+.set-alarm-exit{
+    position: relative;
+    top: -50%;
+    left: 40%;
+}
+
+.set-alarm-exit:hover{
+    cursor: pointer;
+
+}
+
 .alarmTimeHolder{
     font-size: 1.5rem;
 }
@@ -491,6 +502,20 @@ button:hover {
     justify-content: center;
 }
 
+.game-congratulation-title { 
+    opacity: 0; 
+    animation-name: congratulation-title-anim;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal; 
+    animation-fill-mode: forwards;
+}
+
+@keyframes congratulation-title-anim {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
 .exit-button { 
     grid-area: exit-button;
     display: flex;
@@ -614,7 +639,7 @@ button:hover {
 
 .operands_select{
     height: 35px;
-    width: 80px;
+    width: 90px;
     background-color: #0b0b0b;
     border-style: none;
     color: var(--accent-color);
@@ -650,7 +675,7 @@ button:hover {
     color: #141414;
     font-size: 10.5rem;
     width: 200px;
-    background: #c1eb99;
+    background: #c1eb9900;
     border-bottom: #141414;
     border-style: groove;
     border-top-style: none;
@@ -659,6 +684,11 @@ button:hover {
     border-left-style: none;
     border-bottom-width: 12px;
 }
+
+.math-wrong-answer{
+    background-color: red;
+}
+
 /* Match game */
 
 .game-container{
@@ -678,6 +708,7 @@ button:hover {
     animation-fill-mode: forwards;
     clip-path: circle(var(--game-container-mask-size) at 50% 50%);
     overflow: hidden;
+    transition: 1s;
 }
 
 @keyframes start-game-animation {
