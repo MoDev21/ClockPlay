@@ -502,19 +502,6 @@ button:hover {
     justify-content: center;
 }
 
-.game-congratulation-title { 
-    opacity: 0; 
-    animation-name: congratulation-title-anim;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    animation-direction: normal; 
-    animation-fill-mode: forwards;
-}
-
-@keyframes congratulation-title-anim {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
 
 .exit-button { 
     grid-area: exit-button;
@@ -669,12 +656,12 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+}   
 
 .game-display-operand input{
     color: #141414;
     font-size: 10.5rem;
-    width: 200px;
+    max-width: 250px;
     background: #c1eb9900;
     border-bottom: #141414;
     border-style: groove;
@@ -715,7 +702,7 @@ button:hover {
     0% {clip-path: circle(0% at 50% 100%);}
     100% {clip-path: circle(80% at 50% 50%);}
 }
-.game-container h1{
+.game-title{
     color: #141414;
     font-size: 0rem;
     animation-name: game-title-animation;
@@ -734,6 +721,29 @@ button:hover {
     100% {margin-top: 10%;
         font-size: 6rem;}
 }
+
+.game-congratulation-title { 
+    color: #141414;
+    font-size: 6rem;
+    opacity: 0; 
+    margin-top: 10%;
+    animation-name: congratulation-title-anim;
+    animation-duration: .75s;
+    animation-iteration-count: 1;
+    animation-direction: normal; 
+    animation-fill-mode: forwards;
+
+}
+
+@keyframes congratulation-title-anim {
+    0% {opacity: 0; 
+        font-size: 6rem;}
+    55% {font-size: 10rem;}
+    85% {font-size: 5rem;}
+    100% {opacity: 1;
+        font-size: 6rem;}
+}
+
 
 .game-display{
     position: relative;

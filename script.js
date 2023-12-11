@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var gameSelection = document.querySelector('.game-choices');
 
 
+    //Math Game Setttings Variables
+    var operands1Selection;
+    var operands2Selection;
+    var selectedOptionValue;
+
 
     //Were the set alarms are put 
     $.ajax({
@@ -90,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
+
+
  
     async function generateMatchGameSettingsOptions() {
         
@@ -100,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
         
 
         gameSettingOption.style.gap = '11px';
-        // $('.game-settings-options').css('gap', '11px');
         gameSettingOption.innerHTML = '';
         for (let i = 0; i < 3; i++) {
             optionValue++;
@@ -227,6 +233,17 @@ document.addEventListener('DOMContentLoaded', function () {
               $(this).addClass("game-settings-toggle-animation");
             })
         })
+
+        operands1Selection = document.querySelector(".operands_select[name='operand_1']");
+        operands2Selection = document.querySelector(".operands_select[name='operand_2']");
+        
+        operands1Selection.addEventListener('change', function () {
+            selectedOptionValue = operands1Selection.value;
+        });
+    
+        operands2Selection.addEventListener('change', function () {
+            selectedOptionValue = operands2Selection.value;
+        });
     }
 
 
@@ -339,44 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    var operands1Selection = document.querySelector(".operands_select[name='operand_1']");
-    var operands2Selection = document.querySelector(".operands_select[name='operand_2']");
-    var selectedOptionValue;
-    operands1Selection.addEventListener('change', function () {
-        selectedOptionValue = operands1Selection.value;
-        switch (selectedOptionValue) {
-            case "1":
-                console.log('Selected option value: ' + selectedOptionValue);
-                break;
 
-            case "2":
-                console.log('Selected option value: ' + selectedOptionValue);
-                break;
-        
-            default:
-                console.log('Selected option value: none');
-         
-        }
-    });
-
-    
-
-    operands2Selection.addEventListener('change', function () {
-        selectedOptionValue = operands2Selection.value;
-        switch (selectedOptionValue) {
-            case "1":
-                console.log('Selected option value: ' + selectedOptionValue);
-                break;
-
-            case "2":
-                console.log('Selected option value: ' + selectedOptionValue);
-                break;
-        
-            default:
-                console.log('Selected option value: none');
-         
-        }
-    });
 
 
 
@@ -695,8 +675,8 @@ document.addEventListener('DOMContentLoaded', function () {
         
         //Creates the game title
         let title = document.createElement('h1');
-        title.classList.add('gameTitle');
-        title.innerText = 'Wake up'
+        title.classList.add('game-title');
+        title.innerText = 'Wake up';
         gameContainer.appendChild(title);
 
         //Displays the game
@@ -852,8 +832,11 @@ document.addEventListener('DOMContentLoaded', function () {
             matchCountNumber += 1;
             
             //This line will be used when i create settings for the game   
-            if (matchCountNumber == checkMatchGameSettingsValue) {     
-                title.innerText = 'Congratulations'   
+            if (matchCountNumber == checkMatchGameSettingsValue) {
+                title.classList.remove('game-title');
+                title.classList.remove('game-options-title');
+                title.classList.add('game-congratulation-title');  
+                title.innerText = 'Congratulations';
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
                         gameContainer.classList.add('remove-game')
@@ -883,8 +866,8 @@ document.addEventListener('DOMContentLoaded', function () {
         
         //Creates the game title
         let title = document.createElement('h1');
-        title.classList.add('gameTitle');
-        title.innerText = 'Wake up'
+        title.classList.add('game-title');
+        title.innerText = 'Wake up';
         gameContainer.appendChild(title);
 
         //Displays the game
@@ -937,8 +920,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('listening');
             if (goodResult == userResult){
                 console.log(goodResult + ' = ' + userResult);
+                title.classList.remove('game-title');
+                title.classList.remove('game-options-title');
                 title.classList.add('game-congratulation-title');
-                title.innerText = 'Congratulations'
+                title.innerText = 'Congratulations';
                 gameContainer.style.backgroundColor = 'rgb(221, 240, 204)';
                 setTimeout(() => {
                     gameContainer.style.backgroundColor = '';
