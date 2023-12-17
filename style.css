@@ -134,20 +134,7 @@ body {
     stroke: #bcd978;
 }   
 
-.alarm-form__section-repeat-days{
-    background-color: #141414;
-    padding: 20px;
-    border-radius: 20px;
-    transition: .5s;
-    height: 100px;
-    display: grid; 
-    grid-template-columns: 1.6fr 0.9fr; 
-    grid-template-rows: 1fr 1fr; 
-    gap: 0px 0px; 
-    grid-template-areas: 
-      ". ."
-      "repeat-days repeat-days"; 
-}
+
 
 .alarm-name-label{
     margin-left: 40px;
@@ -187,6 +174,9 @@ body {
     transition: .1s;
     opacity: 0;
 }
+
+
+
 @keyframes btn-spawn {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -258,6 +248,12 @@ body {
     transform: translateY(25%);
 }
 
+.alarm-days-next-month-btn {
+    background-color: #232b17;
+    color: #60fa24;
+    border-radius: 50%;
+}
+
 .show-alarm-days-btn {
     opacity: 1;
     transform: translateY(0%);
@@ -288,6 +284,22 @@ body {
     display: none;
     width: 0;
     height: 0;
+}
+
+.alarm-form__section-repeat-days{
+    grid-area: alarm-dates-section;
+    background-color: #141414;
+    padding: 20px;
+    border-radius: 20px;
+    transition: .5s;
+    height: 100px;
+    display: grid; 
+    grid-template-columns: 1.6fr 0.9fr; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". ."
+      "repeat-days repeat-days"; 
 }
 
 
@@ -357,9 +369,10 @@ h1 {
 .alarm-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 0px 15px;
-    grid-template-areas: ". .";
+    grid-template-areas: ". alarm-dates-section ."
+                        ". button .";
 
 }
 
@@ -432,6 +445,7 @@ input[type="text"] {
 
 
 button {
+    grid-area: button;
     font-size: 16px;
     background-color: var(--accent-color);
     color: var(--font-color-dark);
@@ -441,16 +455,12 @@ button {
     /* margin-top: 80px; */
     cursor: pointer;
     position: relative;
-    left: 380px;
-    top: 30px;
-    transition: .5s;
+    left: 0%;
+    height: 50px;
+    top: 0%;
 }
 
-.button-move {
-    left: 0px;
-    top: 30px;
-    transition: .5s;
-}
+
 
 button:hover {
     background-color: #0056b3;
