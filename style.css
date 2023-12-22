@@ -402,7 +402,7 @@ h1 {
     display: flex;
     margin-top: 10px;
     gap: 4px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .repearDatesSpan{
@@ -684,6 +684,8 @@ button:hover {
 .operator{
     height: 25px;
     width: 70px;
+    position: relative;
+    opacity: 0;
 }
 
 .operand{
@@ -901,7 +903,7 @@ button:hover {
     } */
 
     .sidebar {
-        grid-area: sidebar;
+        flex: 1;
         height: 100%;
         width: 50%;
         background-color: var(--background-color);
@@ -922,16 +924,16 @@ button:hover {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 70%;
         position: fixed;
-        left: -75%;
+        left: -62%;
         height: 100%;
         z-index: 2;
     }
 
-    .sidebar-switch{
-        width: 50px;
-        height: 50px;
+    .sidebar-switch {
+        width: 90px;
+        height: 90px;
         border-radius: 30px;
         background: #B0E04A;
         display: flex;
@@ -941,7 +943,7 @@ button:hover {
         left: 4%;
         color: #141414;
         transition: .5s;
-    }
+      }
 
     .sidebar-switch:hover{
         cursor: pointer;
@@ -975,8 +977,8 @@ button:hover {
     }
 
     @keyframes show-sidebar {
-        0% {left: -75%;}
-        100% {left: -20%;}
+        0% {left: -62%;}
+        100% {left: 0%;}
     }
 
     .sidebar-deactive{
@@ -984,8 +986,8 @@ button:hover {
     }
 
     @keyframes hide-sidebar {
-        0% {left: -20%;}
-        100% {left: -75%;}
+        0% {left: 0%;}
+        100% {left: -62%;}
     }
     	
 
@@ -994,11 +996,13 @@ button:hover {
         height: 100%;
         display: block;
         box-sizing: border-box;
-        background-color: #0056b3;
+        background-color: var(--background-color);
         margin: 0;
     }
 
     .container {
         padding-bottom: 100px;
     }
+
+    .container:ch
 }

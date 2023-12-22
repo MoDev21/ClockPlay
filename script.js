@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var days = [];
     var alarmArray = [];
     var checkMatchGameSettingsValue;
+    const container = document.querySelector('.container');
 
     //Main clock variables
     const mainClock = document.querySelector('.main-clock__time');
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var selectedOptionValue;
 
 
-    const screenWidth = window.innerWidth;
+    var screenWidth = window.innerWidth;
 
 
     //Were the set alarms are put 
@@ -102,13 +103,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
-    sidebar_switch_input.addEventListener('change', function () {
+    sidebar_switch_input.addEventListener('change', sidebar_switching);
+
+    function sidebar_switching() {
         if (this.checked) {
             // Checkbox is checked
             console.log("Checkbox is checked");
             sidebar_switch.classList.remove('sidebar-switch-input-unchecked');
             sidebar_container.classList.add('sidebar-active');
             sidebar_switch.classList.add('sidebar-switch-active');
+            sidebar_container.addEventListener('animationend', function animationEndHandler() {
+                // Remove the event listener
+                sidebar_container.removeEventListener('animationend', animationEndHandler);
+            });
         } else {
             // Checkbox is unchecked
             console.log("Checkbox is unchecked");
@@ -123,9 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 sidebar_container.removeEventListener('animationend', animationEndHandler);
             });
         }
-    });
-
-
+    }
 
  
     async function generateMatchGameSettingsOptions() {
@@ -347,28 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     activeGameOption();
 
-    function applyStylesBasedOnWidth() {
-        const width = window.innerWidth;
-      
-        console.log(screenWidth);
-        // Desktop styles
-        if (width >= 1200) {
-            alarmForm.style.removeProperty('grid-template-areas');
-            document.querySelector('#set-alarm').style.left = '104%';
-          // Add other desktop-specific styles here
-        }
-        else{
-            document.querySelector('#set-alarm').style.left = '0%';
-            document.querySelector('#set-alarm').style.left = '0%';
-        }
-      
-    }
-    
-    // Initial call to apply styles based on the window width
-    applyStylesBasedOnWidth();
-    
-    // Event listener to handle window resize
-    window.addEventListener('resize', applyStylesBasedOnWidth);
+
     
 
     function checkDefaultNumberofMatch() {
@@ -448,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         nextmonthDate = 35 - days.length
 
-        console.log(nextmonthDate);
+        // console.log(nextmonthDate);
 
         for (let index = 0; index < nextmonthDate; index++) {
             days.push(new Date(date).getDate());
@@ -485,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dateToggleInput.addEventListener('change', function () {
         if (!this.checked) {
             // Checkbox is checked
-            console.log('mode false');
+            
             switcher = false;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn();
@@ -493,6 +477,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (screenWidth >= 1200) {
                 $('button').css({'left': '104%'});
                 $('button').css({'transition': '.5s'});
+                console.log(screenWidth + ` :` + 'mode false');
+            }
+            else {
+                $('button').css({'transition': '.5s'});
+                $('button').css({'top': '0%'});
+                container.style.backgroundColor = '';
+                console.log(screenWidth + ` :` + 'mode false');
             }
             
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34" fill="none">
@@ -505,15 +496,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $('.date-toggle span').html(repeatDayToggle);
             $('.alarm-form__section-repeat-days').css({    
             'height': '100px'});
-            if ((screenWidth >= 768) && (screenWidth < 1200)) {
-                $('button').css({'transition': '.5s'});
-                $('button').css({'left': '0%'});
-            }
+
 
             
         }
         else{
-            console.log('mode true');
             switcher = true;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn();
@@ -531,12 +518,18 @@ document.addEventListener('DOMContentLoaded', function () {
             if (screenWidth >= 1200) {
                 $('button').css({'transition': '.5s'});
                 $('button').css({'left': '0%'});
+                console.log(screenWidth + ` :` + 'mode true');
+            }
+            else if((screenWidth >= 768) && (screenWidth <= 1200)){
+                $('button').css({'transition': '.5s'});
+                $('button').css({'top': '-62%'});
+                console.log(screenWidth + ` :` + 'mode true');
             }
             
         }
     });
 
-
+    dateToggleInput.checked = false;
 
     // This function generates the checkboxes of each alarm mode
 
@@ -556,11 +549,9 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <li><p>${e}</p></li>
                                 </label>`;                                
             $(repeatDay).append(repeatDayBtn);
-            console.log(repeatDay);
         });
 
         let input = document.querySelectorAll('.repeat-days label input');
-        console.log(input);
         
         input.forEach(btn => {
             btn.nextElementSibling.classList.add('alarm-days-btn');
@@ -645,7 +636,19 @@ document.addEventListener('DOMContentLoaded', function () {
             alarmDate.setDate(alarmDate.getDate() + 1);
         }
 
-        
+        sidebar_switch_input.checked = true;
+        if (sidebar_switch_input.checked) {
+            // Checkbox is checked
+            console.log("Checkbox is checked");
+            sidebar_switch.classList.remove('sidebar-switch-input-unchecked');
+            sidebar_container.classList.add('sidebar-active');
+            sidebar_switch.classList.add('sidebar-switch-active');
+            sidebar_container.addEventListener('animationend', function animationEndHandler() {
+                // Remove the event listener
+                sidebar_container.removeEventListener('animationend', animationEndHandler);
+            });
+        }
+            
 
 
 
@@ -785,8 +788,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function matchGame() {
 
 
-
-
         //Creates the game container
         let gameContainer = document.createElement('div');
         gameContainer.classList.add('game-container');
@@ -811,6 +812,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         
         gameDisplay.style.gridTemplateColumns = `repeat(${checkMatchGameSettingsValue}, 1fr)`;
+
+
+        if (screenWidth <= 768) {
+            mainContainer.style.display = 'grid';  
+        }
         
         
         // Generates the match game cards
@@ -961,6 +967,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         gameContainer.classList.add('remove-game')
                         setTimeout(() => {
                             mainContainer.removeChild(gameContainer);
+                            if (screenWidth <= 768) {
+                                mainContainer.style.display = '';  
+                            }
                         }, 2000)
                     });
                     matchCountNumber = 0;
@@ -997,6 +1006,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let operand1;
         let operand2;
         
+        
         if (operands1Selection.value == 2){
             console.log(' Numbers of Digits ' + operands1Selection.value);
             operand1 = Math.floor((Math.random() * 98) + 1);
@@ -1011,6 +1021,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else {
             operand2 = Math.floor((Math.random() * 9) + 1);
+        }
+
+        if (screenWidth <= 768) {
+            mainContainer.style.display = 'grid';  
         }
 
 
@@ -1051,6 +1065,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     gameContainer.classList.add('remove-game')
                     setTimeout(() => {
                         mainContainer.removeChild(gameContainer);
+                        if (screenWidth <= 768) {
+                            mainContainer.style.display = '';  
+                        }
                     }, 2000)
                 }, 1500);
             }
@@ -1072,4 +1089,52 @@ document.addEventListener('DOMContentLoaded', function () {
     function Congradulation() { 
 
     }
+
+    function applyStylesBasedOnWidth() {
+        screenWidth = window.innerWidth;
+        sidebar_switch_input.checked = false;
+        console.log(screenWidth);
+        // Desktop styles
+        if (screenWidth >= 1200) {
+            alarmForm.style.removeProperty('grid-template-areas');
+            if (dateToggleInput.checked) {
+                document.querySelector('#set-alarm').style.left = '0%';
+                document.querySelector('#set-alarm').style.top = '';
+            }
+            else{
+                document.querySelector('#set-alarm').style.left = '104%';
+                document.querySelector('#set-alarm').style.top = '';
+            }
+        } 
+        // Tablet styles
+        else if ((screenWidth >= 768) && (screenWidth <= 1199)) {
+            if (dateToggleInput.checked) {
+                document.querySelector('#set-alarm').style.top = '-62%';
+                document.querySelector('#set-alarm').style.left = '0%';
+                
+            }
+            else{
+                document.querySelector('#set-alarm').style.top = '0%';
+                document.querySelector('#set-alarm').style.left = '0%';
+            }
+            
+        }
+        
+        else {
+            document.querySelector('#set-alarm').style.left = '0%';
+            document.querySelector('#set-alarm').style.left = '0%';
+            document.querySelector('#set-alarm').style.top = '';
+        }
+    }
+
+    // Function to handle window resize event
+    function handleWindowResize() {
+        applyStylesBasedOnWidth();
+    }
+
+    // Initial call to apply styles based on the window width
+    applyStylesBasedOnWidth();
+
+    // Event listener to handle window resize
+    window.addEventListener('resize', handleWindowResize);
 });
