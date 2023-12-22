@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const alarmNameInput = document.getElementById('alarm-name-input');
     const setAlarmButton = document.getElementById('set-alarm');
     const btn_repeatDate = document.querySelectorAll('.repeat-days label input');
+    const alarmForm = document.querySelector('.alarm-form');
     // const repeatDateName = document.querySelectorAll('.repeat-days label li');
     // const btn_alarmDays = document.querySelectorAll('.alarm-days label input');
     // const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -26,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const mainContainer = document.querySelector('.main-container')
     const GlobalDate = new Date();
 
-
+    //sidebar variables
+    const sidebar_container = document.querySelector('.sidebar-container');
+    const sidebar_switch = document.querySelector('.sidebar-switch');
+    const sidebar_switch_input = document.querySelector('.sidebar-switch-input');
   
     //options for MatchGame
     // const cardLetterArray = ['A','B','C','D','E'];
@@ -40,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var operands1Selection;
     var operands2Selection;
     var selectedOptionValue;
+
+
+    const screenWidth = window.innerWidth;
 
 
     //Were the set alarms are put 
@@ -95,6 +102,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
+    sidebar_switch_input.addEventListener('change', function () {
+        if (this.checked) {
+            // Checkbox is checked
+            console.log("Checkbox is checked");
+            sidebar_switch.classList.remove('sidebar-switch-input-unchecked');
+            sidebar_container.classList.add('sidebar-active');
+            sidebar_switch.classList.add('sidebar-switch-active');
+        } else {
+            // Checkbox is unchecked
+            console.log("Checkbox is unchecked");
+            sidebar_container.classList.add('sidebar-deactive');
+            sidebar_switch.classList.add('sidebar-switch-input-unchecked');
+            sidebar_container.addEventListener('animationend', function animationEndHandler() {
+                sidebar_container.classList.remove('sidebar-deactive');
+                sidebar_container.classList.remove('sidebar-active');
+                sidebar_switch.classList.remove('sidebar-switch-active');
+
+                // Remove the event listener
+                sidebar_container.removeEventListener('animationend', animationEndHandler);
+            });
+        }
+    });
+
 
 
  
@@ -104,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let option;
         let optionValue = 0;
 
-        
+
 
         gameSettingOption.style.gap = '11px';
         gameSettingOption.innerHTML = '';
@@ -292,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var selectedOptionValue = gameSelection.value;
             switch (selectedOptionValue) {
                 case "Match_Game":
-
                     gameSettingTitle.style.display = "block";
                     gameSettingOption.style.height = `291px`;
                     generateMatchGameSettingsOptions();
@@ -318,7 +347,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     activeGameOption();
 
-
+    function applyStylesBasedOnWidth() {
+        const width = window.innerWidth;
+      
+        console.log(screenWidth);
+        // Desktop styles
+        if (width >= 1200) {
+            alarmForm.style.removeProperty('grid-template-areas');
+            document.querySelector('#set-alarm').style.left = '104%';
+          // Add other desktop-specific styles here
+        }
+        else{
+            document.querySelector('#set-alarm').style.left = '0%';
+            document.querySelector('#set-alarm').style.left = '0%';
+        }
+      
+    }
+    
+    // Initial call to apply styles based on the window width
+    applyStylesBasedOnWidth();
+    
+    // Event listener to handle window resize
+    window.addEventListener('resize', applyStylesBasedOnWidth);
+    
 
     function checkDefaultNumberofMatch() {
         let checkboxes = document.querySelectorAll('.game-settings-toggle input');
@@ -384,8 +435,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var nextmonthDate;
         
+        
 
-        // Empties the array
         days = [];
         
         // Continue adding days to the days array while the month is the same
@@ -438,8 +489,12 @@ document.addEventListener('DOMContentLoaded', function () {
             switcher = false;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn();
-            $('button').css({'left': '104%'});
-            $('button').css({'transition': '.5s'});
+            
+            if (screenWidth >= 1200) {
+                $('button').css({'left': '104%'});
+                $('button').css({'transition': '.5s'});
+            }
+            
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34" fill="none">
                                         <path d="M19.5 5.09078V1.81143M19.5 5.09078V8.37014M19.5 5.09078H12.75M1.5 14.9288V29.6859C1.5 31.4971 2.84314 32.9653 4.5 32.9653H25.5C27.1569 32.9653 28.5 31.4971 28.5 29.6859V14.9288H1.5Z" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M1.5 14.9288V8.37014C1.5 6.559 2.84314 5.09079 4.5 5.09079H7.5" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
@@ -450,21 +505,19 @@ document.addEventListener('DOMContentLoaded', function () {
             $('.date-toggle span').html(repeatDayToggle);
             $('.alarm-form__section-repeat-days').css({    
             'height': '100px'});
-
-            setTimeout(() => {
+            if ((screenWidth >= 768) && (screenWidth < 1200)) {
+                $('button').css({'transition': '.5s'});
                 $('button').css({'left': '0%'});
-                $('.alarm-form').css({    
-                    'grid-template-areas': `". alarm-dates-section ."
-                                            ". button ."`});
-                $('button').css({'transition': ''});
-            }, 490);
+            }
+
+            
         }
         else{
             console.log('mode true');
             switcher = true;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn();
-            $('button').css({'left': '104%'});
+            
 
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
                                         <path d="M31.0556 24.2883H12.0556C8.53703 24.2883 1.5 22.0483 1.5 13.0883C1.5 4.12834 8.53703 1.88834 12.0556 1.88834H28.9444C32.463 1.88834 39.5 4.12834 39.5 13.0883C39.5 16.4356 38.5179 18.8451 37.1039 20.5502" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -474,14 +527,12 @@ document.addEventListener('DOMContentLoaded', function () {
             $('.date-toggle span').html(repeatDayToggle);
             $('.alarm-form__section-repeat-days').css({    
                 'height': '285px'});
-            $('.alarm-form').css({    
-                'grid-template-areas': `". alarm-dates-section ."
-                                        "button alarm-dates-section ."`});
-            setTimeout(() => {
+            
+            if (screenWidth >= 1200) {
                 $('button').css({'transition': '.5s'});
                 $('button').css({'left': '0%'});
-            }, 0);
-
+            }
+            
         }
     });
 
