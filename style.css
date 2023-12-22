@@ -350,6 +350,11 @@ body {
 
 }
 
+.toggle li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .alarmTimeHolder{
     font-size: 1.5rem;
 }
