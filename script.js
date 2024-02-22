@@ -14,7 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // const btn_alarmDays = document.querySelectorAll('.alarm-days label input');
     // const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     const monthText = ['January','February','March','April','May','June','July','August','September','October','November','December',];
-    var repeatDaysArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    var repeatDaysArray = [
+        {id: 0, dayofWeek: 'Sunday'}, 
+        {id: 1, dayofWeek: 'Monday'}, 
+        {id: 2, dayofWeek: 'Tuesday'}, 
+        {id: 3, dayofWeek: 'Wednesday'}, 
+        {id: 4, dayofWeek: 'Thursday'}, 
+        {id: 5, dayofWeek: 'Friday'}, 
+        {id: 6, dayofWeek: 'Saturday'}];
     var setRepeatDaysArray = [];
     // var repearDaysString;
     var days = [];
@@ -60,7 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(alarmArray);
         }
     });
-
+    
+    
     
 
     //Show the current time
@@ -81,6 +89,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     showTime();
 
+    /**
+     * A function that checks the time and adds a leading zero if the time is less than 10.
+     *
+     * @param {number} i - The time to check.
+     * @return {string} The time with a leading zero if necessary.
+     */
     function checkTime(i) { 
         if (i < 10) { i = "0" + i};
         return i;
@@ -134,6 +148,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const OPTION_COUNT = 3;
  
+    /**
+     * Generates the match game settings options.
+     *
+     * @async
+     * @function generateMatchGameSettingsOptions
+     * @returns {void}
+     */
     async function generateMatchGameSettingsOptions() {
         const gameSettingOption = document.querySelector('.game-settings-options');
         gameSettingOption.style.gap = '11px';
@@ -270,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
 
             default:
+                gameSettingOption.style.gridTemplateRows = "0fr 0fr";
                 setGameSettings("none", "141px");
                 document.querySelector('.game-settings-options').innerHTML = '';
                 console.log('Selected option value: none');
@@ -320,8 +342,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
 
+    // Event listener for the "Set Alarm" button
 
     // Alarm Days
+
+    
 
     function AlarmDateModeSwitcher(switcher) {      
 
@@ -330,7 +355,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else{
             getDaysInMonth(GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
-        }
+        }   
+
+        
 
     }
 
@@ -384,10 +411,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     var switcher = false
-
-
-    
-
     var dateToggleInput = document.querySelector('.date-toggle input')
 
     //Here I'm changing the icon and the alarm mode when I click on the dateToggleInput
@@ -397,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             switcher = false;
             AlarmDateModeSwitcher(switcher);
-            generateDateToggleBtn();
+            generateDateToggleBtn(switcher);
             
             if (screenWidth >= 1200) {
                 $('button').css({'left': '104%'});
@@ -428,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
         else{
             switcher = true;
             AlarmDateModeSwitcher(switcher);
-            generateDateToggleBtn();
+            generateDateToggleBtn(switcher);
             
 
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
@@ -458,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // This function generates the checkboxes of each alarm mode
 
-    function generateDateToggleBtn() { 
+    function generateDateToggleBtn(cansubstring) { 
         let repeatDay = document.querySelector('.alarm-form__section-repeat-days ul');
 
 
@@ -471,8 +494,8 @@ document.addEventListener('DOMContentLoaded', function () {
         days.forEach(e => {
             let repeatDayBtn = `<label class="toggle">
                                     <input type="checkbox">
-                                    <li><p>${e}</p></li>
-                                </label>`;                                
+                                    <li><p>${cansubstring > 0 ? e : e['dayofWeek'].substring(0, 3)}</p></li>
+                                </label>`;                                 
             $(repeatDay).append(repeatDayBtn);
         });
 
@@ -534,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to set the alarm
 
-    function setAlarm(alarmTime ,alarmNameInput) {
+    function setAlarm(alarmTime, alarmNameInput, ) {
         const alarmTItle = document.createElement('div');
         const setClockTime = document.createElement('div');
         const alarmDates = document.createElement('div');
@@ -556,11 +579,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Get the current time in milliseconds
         const currentTime = now.getTime();
 
-        // If the alarm time is earlier than the current time, set it for the next day
-        if (alarmDate.getTime() <= currentTime) {
-            alarmDate.setDate(alarmDate.getDate() + 1);
-        }
 
+
+
+        // Set the alarm time in the UI
+        // alarmTimeInput.value = `${checkTime(alarmDate.getHours())}:${checkTime(alarmDate.getMinutes())}`;
+
+        // Show the sidebar by checking the checkbox
         sidebar_switch_input.checked = true;
         if (sidebar_switch_input.checked) {
             // Checkbox is checked
@@ -575,7 +600,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
             
 
+        console.log(repeatDaysArray);
+        // If the alarm time is earlier than the current time, set it for the next day
+        if (alarmDate.getTime() <= currentTime) {
+            alarmDate.setDate(alarmDate.getDate() + 1);
+        }
 
+        
+
+        // if (alarmDate.getTime() <= currentTime) {
+        //     if(!alarmArray){
+        //         alarmDate.setDate(alarmDate.getDate() + 1);
+        //     }
+        // }
+        // if (alarmDate.getDay() == repeatDaysArray[alarmDate.getDay()]) {
+        //     alarmDate.setDate(alarmDate.getDate() + 7);
+        // }
 
 
         // Calculate the time remaining until the alarm in milliseconds
@@ -584,14 +624,136 @@ document.addEventListener('DOMContentLoaded', function () {
         let alarmObject =   { 
             time:timeUntilAlarm, 
             title:alarmTItle.textContent, 
-            date:alarmDates
+            date:alarmDates,
+            arrayRepeatDays:[]
         }
 
         
-
-        console.log(alarmArray);
+        //writes the days where the alarms repeats
+        let replaceArray = [];
+        let uncheckCount = 0;
+        let repeatDayInput = document.querySelectorAll('.repeat-days label input');
+        
+        //checkes for the repeat days that are checked to put them in the replaceArray
+        for (let i = 0; i < repeatDaysArray.length; i++) {
+            
+            if(repeatDayInput[i].checked){
+                if(repeatDaysArray[i]['dayofWeek'].substring(0, 3) === repeatDayInput[i].nextElementSibling.firstChild.innerHTML){
+                    // Add the checked name or names of to the replay array who will replace the content 
+                    // of the setRepeatDaysArray 
+                    console.log(repeatDayInput);
+                    replaceArray.push(`${repeatDaysArray[i]['dayofWeek'].substring(0, 3)}`)
+                    setRepeatDaysArray = replaceArray;
+                    alarmObject['arrayRepeatDays'] = setRepeatDaysArray;
+                }
+            }
+            
+            // To make sure 
+            if(!repeatDayInput[i].checked){
+                uncheckCount++;
+                if (uncheckCount == 7) {
+                    setRepeatDaysArray = [];
+                }
+                console.log('no check');
+            }
+        }
+        
+        
         
         alarmArray.push(alarmObject);
+
+        // let repeatAlarmDate = new Date();
+        // repeatAlarmDate.setDate(repeatAlarmDate.getDate() + 1);
+        // let date = new Date();
+        // let month = date.getMonth();
+        // let year = date.getFullYear();
+
+        // let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        // const currentDate = now.getDate();
+
+        // for(let i = 1; i <= 31; i++) {
+        //     let d = new Date(year, month, i);
+        //     if(d.getMonth() === month) {
+        //         console.log(`Date: ${i}, Day: ${days[d.getDay()]}`);
+        //     }
+        // } // Output: 0 for Sunday, 1 for Monday, etc.
+
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+        
+        let daysInCurrentMonth = getDaysInMonth(new Date().getMonth() + 1, new Date().getFullYear());
+        console.log(daysInCurrentMonth);
+
+        //e === repeatDaysArray[now.getDay()]['dayofWeek'].substring(0, 3) ? e : NaN
+        for (let index = 0; index < alarmArray.length; index++) {
+
+            alarmArray[index].arrayRepeatDays.forEach(e => {
+                switch (e) {
+                    case 'Sun':
+                        setRepeatAlarm(0);
+                        break;
+                    case 'Mon':
+                        setRepeatAlarm(1);
+                        break;
+                    case 'Tue':
+                        setRepeatAlarm(2);
+                        break;
+                    case 'Wed':
+                        setRepeatAlarm(3);
+                        break;
+                    case 'Thu':
+                        setRepeatAlarm(4);
+                        break;
+                    case 'Fri':
+                        setRepeatAlarm(5);
+                        break;
+                    case 'Sat':
+                        setRepeatAlarm(6);  
+                        break;
+                    default:
+                        break;
+                }
+            });
+            
+        }
+
+        function setRepeatAlarm(dayOfWeekNumber) {
+            let nextSunday;
+            let dayOfWeek = now.getDay();
+
+            if (dayOfWeek === dayOfWeekNumber && now.getHours() < 24) {
+                if (now.getDate() < daysInCurrentMonth) {
+                    nextSunday = new Date(now.getFullYear(), now.getMonth() , now.getDate() + 7);
+                }
+                else {
+                    nextSunday = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate() + 7);
+                }
+                
+            } else {
+                if (now.getDate() < daysInCurrentMonth) {
+                    nextSunday = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate() + ((dayOfWeekNumber + 7 - dayOfWeek) % 7));
+                }
+                else {
+                    nextSunday = new Date(now.getFullYear(), now.getMonth() , now.getDate() + ((dayOfWeekNumber + 7 - dayOfWeek) % 7));
+                }
+                
+            }
+
+            let nextSundayMidnight = nextSunday.getTime() - now.getTime();
+
+            console.log(nextSunday);
+
+            setTimeout(function() {
+                // Code to execute on Sundays
+                console.log('Sunday');
+
+                setInterval(function() {
+                    // Code to execute on Sundays
+                    console.log('Sunday');
+                }, 7 * 24 * 60 * 60 * 1000); // Repeat every 24 hours
+            }, nextSundayMidnight);
+        }
 
         let alarmTimeSet;
 
@@ -600,8 +762,13 @@ document.addEventListener('DOMContentLoaded', function () {
             
         }
 
-
+        console.log("df " + alarmTimeSet);
         // Set a timeout to trigger the alarm when the time is up
+
+
+
+
+
         
         let alarmTimeSetVariable = setTimeout(function () {
             let selectedOptionValue = gameSelection.value;
@@ -618,10 +785,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('Wake up.');
                     break;
             }
-            console.log(alarmTimeSet);
-        }, );
+            console.log(alarmTimeSet.getDay());
+        }, alarmObject['arrayRepeatDays'].length > 0 ? (alarmTimeSet + 7) : alarmTimeSet);
 
-       
         cancelBtn.addEventListener('click', function () {
             let pos = Array.from(document.querySelectorAll('.set-alarm')).indexOf(this.parentNode);
             clearTimeout(alarmTimeSetVariable);
@@ -629,6 +795,19 @@ document.addEventListener('DOMContentLoaded', function () {
             this.parentNode.remove();
             console.log(alarmArray);
         })
+        AlarmBlockGenerator(alarmDate, cancelBtn, alarmTItle, alarmTimeHolder, setClockTime, alarmDates, alarmTimeSetVariable, alarmNameInput);
+
+        
+        console.log('day ' + now.getDay());
+        console.log('time ' + now.getTime());
+
+    }    
+
+
+
+    function AlarmBlockGenerator(alarmDate, cancelBtn, alarmTItle, alarmTimeHolder, setClockTime, alarmDates, alarmTimeSetVariable, alarmNameInput) {
+
+
 
 
         //writes to title of the alarm
@@ -643,33 +822,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setClockTime.classList.add('set-alarm');
         
         
-        //writes the days where the alarms repeats
-        let replaceArray = [];
-        let uncheckCount = 0;
-        let repeatDayInput = document.querySelectorAll('.repeat-days label input');
-        
-        //checkes for the repeat days that are checked to put them in the replaceArray
-        for (let i = 0; i < repeatDaysArray.length; i++) {
-            
-            if(repeatDayInput[i].checked){
-                if(repeatDaysArray[i].substring(0, 3) === repeatDayInput[i].nextElementSibling.firstChild.innerHTML){
-                    // Add the checked name or names of to the replay array who will replace the content 
-                    // of the setRepeatDaysArray 
-                    console.log(repeatDayInput);
-                    replaceArray.push(`${repeatDaysArray[i]}`)
-                    setRepeatDaysArray = replaceArray;
-                }
-            }
-            
-            // To make sure 
-            if(!repeatDayInput[i].checked){
-                uncheckCount++;
-                if (uncheckCount == 7) {
-                    setRepeatDaysArray = [];
-                }
-                console.log('no check');
-            }
-        }
 
 
 
@@ -699,13 +851,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setClockTime.appendChild(alarmDates);
         setClockTime.appendChild(cancelBtn);
         document.querySelectorAll('set-alarm');
-        
-
-    }    
-
-
-
-
+    }
 
 
 
@@ -991,41 +1137,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function Congradulation() { 
-
-    }
-
     function applyStylesBasedOnWidth() {
-        const screenWidth = window.innerWidth;
-        const setAlarmElement = document.querySelector('#set-alarm');
+        screenWidth = window.innerWidth;
         sidebar_switch_input.checked = false;
-        console.log(screenWidth);
+        
         // Desktop styles
         if (screenWidth >= 1200) {
             alarmForm.style.removeProperty('grid-template-areas');
-            setAlarmElement.style.left = dateToggleInput.checked ? '0%' : '104%';
-            setAlarmElement.style.top = '';
+            const alarmStyle = setAlarmButton.style;
+            alarmStyle.left = dateToggleInput.checked ? '0%' : '104%';
+            alarmStyle.top = '';
         } 
         // Tablet styles
         else if ((screenWidth >= 768) && (screenWidth <= 1199)) {
-            setAlarmElement.style.top = dateToggleInput.checked ? '-62%' : '0%';
-            setAlarmElement.style.left = '0%';
-        }
-        // Mobile styles
-        else {
-            setAlarmElement.style.left = '0%';
-            setAlarmElement.style.top = '';
+            const alarmStyle = setAlarmButton.style;
+            alarmStyle.top = dateToggleInput.checked ? '-62%' : '0%';
+            alarmStyle.left = '0%';
         }
     }
-    
+
     // Function to handle window resize event
     function handleWindowResize() {
         applyStylesBasedOnWidth();
     }
-    
+
     // Initial call to apply styles based on the window width
     applyStylesBasedOnWidth();
-    
+
     // Event listener to handle window resize
     window.addEventListener('resize', handleWindowResize);
 });

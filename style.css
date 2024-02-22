@@ -24,8 +24,17 @@ body {
     align-items: center;
     height: 100vh;
     color: var(--font-color);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
+.container h1{
+    font-size: 30px;
+    line-height: 0.8;
+    font-style: normal;
+    letter-spacing: 0.066em;
+    font-weight: 400;
+}
 
 
 .main-container{
@@ -43,16 +52,36 @@ body {
     margin: 0;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+/* Track */
+::-webkit-scrollbar-track {
+border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: var(--accent-color);
+border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: var(--accent-color-hover);
+}
+
 
 
 .sidebar{
     grid-area: sidebar;
-    height: 100vh;
+    height: 114vh;
     width: 100%;
     background-color: var(--background-color);
     color: var(--font-color-dark);
     padding: 0px 10px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .sidebar-switch{
@@ -78,6 +107,11 @@ body {
     text-align: center;
 }
 
+.main-clock__container {
+    position: relative;
+    top: -8px;
+}
+
 .main-clock__background {
     position: relative;
     top: 7px;
@@ -93,11 +127,11 @@ body {
 }
 
 .main-clock__secondes {
-    position: absolute;
-    top: 75px;
-    height: 523px;
-    width: 523px;
-    transform: rotate(270deg);
+	position: absolute;
+	top: 59px;
+	height: 523px;
+	width: 523px;
+	transform: rotate(270deg);
 }
 
 .main-clock__secondes svg{
@@ -736,8 +770,9 @@ button:hover {
     background-color: rgb(193, 235, 153);
     height: 100%;
     width: 100%;
-    z-index: 1;
-    position: absolute;
+    z-index: 2;
+    position: fixed;
+    top: 0%;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -896,6 +931,13 @@ button:hover {
         
     }
 
+    .main-clock__container
+    {
+        position: relative;
+        top: -8px;
+        scale: .8;
+    }
+
     /* button {
         left: 0%;
         width: 50px;
@@ -914,7 +956,7 @@ button:hover {
         background-color: var(--background-color);
         color: var(--font-color-dark);
         padding: 0px 10px;
-        overflow: scroll;
+        overflow: auto;
         z-index: 2;
         /* left: -54%; */
         display: flex;
