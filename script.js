@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // const dayText = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     const monthText = ['January','February','March','April','May','June','July','August','September','October','November','December',];
     var repeatDaysArray = [
-        {id: 0, dayofWeek: 'Sunday'}, 
-        {id: 1, dayofWeek: 'Monday'}, 
-        {id: 2, dayofWeek: 'Tuesday'}, 
-        {id: 3, dayofWeek: 'Wednesday'}, 
-        {id: 4, dayofWeek: 'Thursday'}, 
-        {id: 5, dayofWeek: 'Friday'}, 
+        {id: 0, dayofWeek: 'Sunday'},
+        {id: 1, dayofWeek: 'Monday'},
+        {id: 2, dayofWeek: 'Tuesday'},
+        {id: 3, dayofWeek: 'Wednesday'},
+        {id: 4, dayofWeek: 'Thursday'},
+        {id: 5, dayofWeek: 'Friday'},
         {id: 6, dayofWeek: 'Saturday'}];
     var setRepeatDaysArray = [];
     // var repearDaysString;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebar_container = document.querySelector('.sidebar-container');
     const sidebar_switch = document.querySelector('.sidebar-switch');
     const sidebar_switch_input = document.querySelector('.sidebar-switch-input');
-  
+
     //options for MatchGame
     // const cardLetterArray = ['A','B','C','D','E'];
     // const cardAmounts = 0;
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var screenWidth = window.innerWidth;
 
 
-    //Were the set alarms are put 
+    //Were the set alarms are put
     $.ajax({
         url: "json/alarms.json",
         data: "data",
@@ -67,12 +67,12 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(alarmArray);
         }
     });
-    
-    
-    
+
+
+
 
     //Show the current time
-    function showTime() { 
+    function showTime() {
         const today = new Date();
         let hours = today.getHours();
         let minutes = today.getMinutes();
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         seconds = checkTime(seconds) * (100/60);
         //Light green s
         mainClock_seconds.style.strokeDashoffset = `calc(1540px - ((1540px * ${seconds}) / 100))`;
-        
+
         mainClock.innerHTML =  `${hours}:${minutes}`;
         setTimeout(showTime, 1000);
     }
@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {number} i - The time to check.
      * @return {string} The time with a leading zero if necessary.
      */
-    function checkTime(i) { 
+    function checkTime(i) {
         if (i < 10) { i = "0" + i};
         return i;
     }
 
-    
+
 
     btn_repeatDate.forEach(btn => {
         btn.nextElementSibling.classList.add('repeat-days-btn');
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const OPTION_COUNT = 3;
- 
+
     /**
      * Generates the match game settings options.
      *
@@ -159,20 +159,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const gameSettingOption = document.querySelector('.game-settings-options');
         gameSettingOption.style.gap = '11px';
         gameSettingOption.innerHTML = '';
-    
+
         const svgTemplates = [
             { sets: 3, width: 79, rects: 3 },
             { sets: 4, width: 109, rects: 4 },
             { sets: 5, width: 137, rects: 5 }
         ];
-    
+
         for (let i = 0; i < OPTION_COUNT; i++) {
             const svgTemplate = svgTemplates[i];
             const rects = new Array(svgTemplate.rects).fill(0).map((_, index) => `
                 <rect x="${index * 29.9312}" y="0.940826" width="19.3966" height="37.0066" class="game-settings-toggle-unchecked"/>
                 <rect x="${index * 29.9312}" y="48.6382" width="19.3966" height="35.3618" class="game-settings-toggle-unchecked"/>
             `).join('');
-    
+
             const option = `
                 <label class="game-settings-toggle">
                     ${svgTemplate.sets} sets
@@ -184,11 +184,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </span>
                 </label>
             `;
-    
+
             $(gameSettingOption).append(option);
             console.log(i + 1);
         }
-    
+
         $(".game-settings-toggle").delay(50).each(function(i) {
             $(this).delay(150 * i).queue(function() {
                 $(this).addClass("game-settings-toggle-animation");
@@ -200,13 +200,13 @@ document.addEventListener('DOMContentLoaded', function () {
     async function generateMathEquationSettingsOptions() {
         const gameSettingOption = document.querySelector('.game-settings-options');
         gameSettingOption.style.gap = '30px';
-    
+
         const operator = `<div class="operator">
                             <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
                                 <path d="M2.66101 16.9931H17M17 16.9931H31.339M17 16.9931V2.65405M17 16.9931V31.3321" stroke="#B0E04A" stroke-width="3.58475" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>`;
-    
+
         const generateSelect = name => `
             <div class="operand">
                 <select name="${name}" class="operands_select">
@@ -215,30 +215,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 </select>
             </div>
         `;
-    
+
         const option = `${generateSelect('operand_1')}${operator}${generateSelect('operand_2')}`;
-    
+
         $(gameSettingOption).html(option);
         $(gameSettingOption.children).delay(50).each(function(i) {
             $(this).delay(150 * i).queue(function() {
                 $(this).addClass("game-settings-toggle-animation");
             })
         })
-    
+
         operands1Selection = document.querySelector(".operands_select[name='operand_1']");
         operands2Selection = document.querySelector(".operands_select[name='operand_2']");
-    
+
         operands1Selection.addEventListener('change', () => {
             selectedOptionValue = operands1Selection.value;
         });
-    
+
         operands2Selection.addEventListener('change', () => {
             selectedOptionValue = operands2Selection.value;
         });
     }
 
 
-  
+
 
 
 
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 card.classList[action]('game-settings-toggle-checked');
             });
         };
-    
+
         checkboxes.forEach(cbx => {
             if (cbx === checkbox && cbx.checked) {
                 console.log("Checkbox with value " + cbx.value + " is checked");
@@ -300,13 +300,13 @@ document.addEventListener('DOMContentLoaded', function () {
     activeGameOption();
 
 
-    
+
 
     function checkDefaultNumberofMatch() {
         const checkboxes = document.querySelectorAll('.game-settings-toggle input');
         checkboxes[0].checked = true;
         checkMatchGameSettingsValue = checkboxes[0].value;
-    
+
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 document.querySelectorAll(`.${checkbox.nextElementSibling.className} svg rect`).forEach(card => {
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gameSelection.addEventListener('change', function() {
         activeGameOption()
         // Now you can use the value of the selected option
-        
+
     });
 
     document.addEventListener("change", function(e){
@@ -340,24 +340,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    
+
 
     // Event listener for the "Set Alarm" button
 
     // Alarm Days
 
-    
 
-    function AlarmDateModeSwitcher(switcher) {      
+
+    function AlarmDateModeSwitcher(switcher) {
 
         if(!switcher){
             getDaysInWeek();
         }
         else{
             getDaysInMonth(GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
-        }   
+        }
 
-        
+
 
     }
 
@@ -369,10 +369,12 @@ document.addEventListener('DOMContentLoaded', function () {
         repeatDaysArray.forEach(e => {
             days.push(e);
 
-        })        
-    
+        })
+
         return days;
     }
+
+
 
     function getDaysInMonth(year, month, currentDay) {
 
@@ -381,17 +383,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const date = new Date(year, month, currentDay);
 
         var nextmonthDate;
-        
-        
+
+
 
         days = [];
-        
+
+
+
         // Continue adding days to the days array while the month is the same
         while (date.getMonth() === month) {
-            
+
             days.push(new Date(date).getDate());
             date.setDate(date.getDate() + 1);
-        }   
+        }
 
         nextmonthDate = 35 - days.length
 
@@ -400,11 +404,11 @@ document.addEventListener('DOMContentLoaded', function () {
         for (let index = 0; index < nextmonthDate; index++) {
             days.push(new Date(date).getDate());
             date.setDate(date.getDate() + 1);
-            
+
         }
 
-        
-    
+
+
         return days;
     }
 
@@ -417,11 +421,11 @@ document.addEventListener('DOMContentLoaded', function () {
     dateToggleInput.addEventListener('change', function () {
         if (!this.checked) {
             // Checkbox is checked
-            
+
             switcher = false;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn(switcher);
-            
+
             if (screenWidth >= 1200) {
                 $('button').css({'left': '104%'});
                 $('button').css({'transition': '.5s'});
@@ -433,36 +437,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.style.backgroundColor = '';
                 console.log(screenWidth + ` :` + 'mode false');
             }
-            
+
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34" fill="none">
                                         <path d="M19.5 5.09078V1.81143M19.5 5.09078V8.37014M19.5 5.09078H12.75M1.5 14.9288V29.6859C1.5 31.4971 2.84314 32.9653 4.5 32.9653H25.5C27.1569 32.9653 28.5 31.4971 28.5 29.6859V14.9288H1.5Z" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M1.5 14.9288V8.37014C1.5 6.559 2.84314 5.09079 4.5 5.09079H7.5" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M7.5 1.81143V8.37014" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M28.5 14.9288V8.37014C28.5 6.559 27.1569 5.09079 25.5 5.09079H24.75" stroke="#B0E04A" stroke-width="1.65252" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>`;
-                                 
+
             $('.date-toggle span').html(repeatDayToggle);
-            $('.alarm-form__section-repeat-days').css({    
+            $('.alarm-form__section-repeat-days').css({
             'height': '100px'});
 
 
-            
+
         }
         else{
             switcher = true;
             AlarmDateModeSwitcher(switcher);
             generateDateToggleBtn(switcher);
-            
+
 
             let repeatDayToggle = `<svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
                                         <path d="M31.0556 24.2883H12.0556C8.53703 24.2883 1.5 22.0483 1.5 13.0883C1.5 4.12834 8.53703 1.88834 12.0556 1.88834H28.9444C32.463 1.88834 39.5 4.12834 39.5 13.0883C39.5 16.4356 38.5179 18.8451 37.1039 20.5502" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M25.7778 18.6883L31.0556 24.2883L25.7778 29.8883" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>`;
-            
+
             $('.date-toggle span').html(repeatDayToggle);
-            $('.alarm-form__section-repeat-days').css({    
+            $('.alarm-form__section-repeat-days').css({
                 'height': '285px'});
-            
+
             if (screenWidth >= 1200) {
                 $('button').css({'transition': '.5s'});
                 $('button').css({'left': '0%'});
@@ -473,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('button').css({'top': '-62%'});
                 console.log(screenWidth + ` :` + 'mode true');
             }
-            
+
         }
     });
 
@@ -481,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // This function generates the checkboxes of each alarm mode
 
-    function generateDateToggleBtn(cansubstring) { 
+    function generateDateToggleBtn(cansubstring) {
         let repeatDay = document.querySelector('.alarm-form__section-repeat-days ul');
 
 
@@ -495,12 +499,12 @@ document.addEventListener('DOMContentLoaded', function () {
             let repeatDayBtn = `<label class="toggle">
                                     <input type="checkbox">
                                     <li><p>${cansubstring > 0 ? e : e['dayofWeek'].substring(0, 3)}</p></li>
-                                </label>`;                                 
+                                </label>`;
             $(repeatDay).append(repeatDayBtn);
         });
 
         let input = document.querySelectorAll('.repeat-days label input');
-        
+
         input.forEach(btn => {
             btn.nextElementSibling.classList.add('alarm-days-btn');
             btn.addEventListener('change', function () {
@@ -513,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log("Checkbox is unchecked");
                     btn.nextElementSibling.classList.remove('alarm-days-checked');
                   }
-            }); 
+            });
 
             $(".repeat-days label li").delay(50).each(function(i) {
                 $(this).delay(25 * i).queue(function() {
@@ -535,9 +539,17 @@ document.addEventListener('DOMContentLoaded', function () {
     /* I am going to work on it later */
     // repeatDateSwitcher();
 
+    function SetToCurrentTime() {
+        const today = new Date();
+        let hours = today.getHours();
+        let minutes = today.getMinutes();
+        hours = checkTime(hours);
+        minutes = checkTime(minutes);
+        alarmTimeInput.value = `${hours}:${minutes}`;
+        
+    }
 
-
-
+    SetToCurrentTime();
 
 
     // Event listener for the "Set Alarm" button
@@ -564,8 +576,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const alarmTimeHolder = document.createElement('div');
         const cancelBtn = document.createElement('div');
 
-        //Exit 
-        cancelBtn.classList.add("set-alarm-exit"); 
+        //Exit
+        cancelBtn.classList.add("set-alarm-exit");
         cancelBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
                                 <path d="M1 19.5862L10.2931 10.2931M10.2931 10.2931L19.5862 1M10.2931 10.2931L1 1M10.2931 10.2931L19.5862 19.5862" stroke="#B0E04A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>`;
@@ -598,7 +610,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 sidebar_container.removeEventListener('animationend', animationEndHandler);
             });
         }
-            
+
 
         console.log(repeatDaysArray);
         // If the alarm time is earlier than the current time, set it for the next day
@@ -606,7 +618,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alarmDate.setDate(alarmDate.getDate() + 1);
         }
 
-        
+
 
         // if (alarmDate.getTime() <= currentTime) {
         //     if(!alarmArray){
@@ -621,34 +633,34 @@ document.addEventListener('DOMContentLoaded', function () {
         // Calculate the time remaining until the alarm in milliseconds
         const timeUntilAlarm = alarmDate.getTime() - currentTime;
 
-        let alarmObject =   { 
-            time:timeUntilAlarm, 
-            title:alarmTItle.textContent, 
+        let alarmObject =   {
+            time:timeUntilAlarm,
+            title:alarmTItle.textContent,
             date:alarmDates,
             arrayRepeatDays:[]
         }
 
-        
+
         //writes the days where the alarms repeats
         let replaceArray = [];
         let uncheckCount = 0;
         let repeatDayInput = document.querySelectorAll('.repeat-days label input');
-        
+
         //checkes for the repeat days that are checked to put them in the replaceArray
         for (let i = 0; i < repeatDaysArray.length; i++) {
-            
+
             if(repeatDayInput[i].checked){
                 if(repeatDaysArray[i]['dayofWeek'].substring(0, 3) === repeatDayInput[i].nextElementSibling.firstChild.innerHTML){
-                    // Add the checked name or names of to the replay array who will replace the content 
-                    // of the setRepeatDaysArray 
+                    // Add the checked name or names of to the replay array who will replace the content
+                    // of the setRepeatDaysArray
                     console.log(repeatDayInput);
                     replaceArray.push(`${repeatDaysArray[i]['dayofWeek'].substring(0, 3)}`)
                     setRepeatDaysArray = replaceArray;
                     alarmObject['arrayRepeatDays'] = setRepeatDaysArray;
                 }
             }
-            
-            // To make sure 
+
+            // To make sure
             if(!repeatDayInput[i].checked){
                 uncheckCount++;
                 if (uncheckCount == 7) {
@@ -657,33 +669,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('no check');
             }
         }
-        
-        
-        
+
+
+
         alarmArray.push(alarmObject);
 
-        // let repeatAlarmDate = new Date();
-        // repeatAlarmDate.setDate(repeatAlarmDate.getDate() + 1);
-        // let date = new Date();
-        // let month = date.getMonth();
-        // let year = date.getFullYear();
 
-        // let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        // const currentDate = now.getDate();
-
-        // for(let i = 1; i <= 31; i++) {
-        //     let d = new Date(year, month, i);
-        //     if(d.getMonth() === month) {
-        //         console.log(`Date: ${i}, Day: ${days[d.getDay()]}`);
-        //     }
-        // } // Output: 0 for Sunday, 1 for Monday, etc.
 
         function getDaysInMonth(month, year) {
-            return new Date(year, month, 0).getDate();
+            return new Date(year, month, 0);
         }
-        
+
         let daysInCurrentMonth = getDaysInMonth(new Date().getMonth() + 1, new Date().getFullYear());
-        console.log(daysInCurrentMonth);
+
 
         //e === repeatDaysArray[now.getDay()]['dayofWeek'].substring(0, 3) ? e : NaN
         for (let index = 0; index < alarmArray.length; index++) {
@@ -691,75 +689,130 @@ document.addEventListener('DOMContentLoaded', function () {
             alarmArray[index].arrayRepeatDays.forEach(e => {
                 switch (e) {
                     case 'Sun':
-                        setRepeatAlarm(0);
+                        setRepeatAlarm(0, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Mon':
-                        setRepeatAlarm(1);
+                        setRepeatAlarm(1, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Tue':
-                        setRepeatAlarm(2);
+                        setRepeatAlarm(2, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Wed':
-                        setRepeatAlarm(3);
+                        setRepeatAlarm(3, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Thu':
-                        setRepeatAlarm(4);
+                        setRepeatAlarm(4, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Fri':
-                        setRepeatAlarm(5);
+                        setRepeatAlarm(5, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     case 'Sat':
-                        setRepeatAlarm(6);  
+                        setRepeatAlarm(6, GlobalDate.getFullYear(), GlobalDate.getMonth(), GlobalDate.getDate());
                         break;
                     default:
                         break;
                 }
             });
-            
+
         }
 
-        function setRepeatAlarm(dayOfWeekNumber) {
-            let nextSunday;
-            let dayOfWeek = now.getDay();
+        function setRepeatAlarm(dayOfWeekNumber, year, month, day) {
+            const now = new Date(year, month, day);
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            const currentDayOfWeek = now.getDay();
+            const currentDate = now.getDate();
+            const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            const daysUntilNextAlarm = ((dayOfWeekNumber + 7 - currentDayOfWeek) % 7);
+            let nextSunday = new Date(now.getFullYear(), now.getMonth(), currentDate + daysUntilNextAlarm);
 
-            if (dayOfWeek === dayOfWeekNumber && now.getHours() < 24) {
-                if (now.getDate() < daysInCurrentMonth) {
-                    nextSunday = new Date(now.getFullYear(), now.getMonth() , now.getDate() + 7);
-                }
-                else {
-                    nextSunday = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate() + 7);
-                }
-                
-            } else {
-                if (now.getDate() < daysInCurrentMonth) {
-                    nextSunday = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate() + ((dayOfWeekNumber + 7 - dayOfWeek) % 7));
-                }
-                else {
-                    nextSunday = new Date(now.getFullYear(), now.getMonth() , now.getDate() + ((dayOfWeekNumber + 7 - dayOfWeek) % 7));
-                }
+            var nextmonthDate;
+
+
+
+            days = [];
+    
+    
+    
+            // Continue adding days to the days array while the month is the same
+            while (now.getMonth() === month) {
+                now.setDate(now.getDate() + 1);
+                days.push(new Date(now));
+                console.log(now);
+            }
+    
+            nextmonthDate = 35 - days.length
+    
+            // console.log(nextmonthDate);
+    
+            for (let index = 0; index < nextmonthDate; index++) {
+                now.setDate(now.getDate() + 1);
+                days.push(new Date(now));
+                console.log(now);
                 
             }
 
-            let nextSundayMidnight = nextSunday.getTime() - now.getTime();
+            console.log(days);
 
-            console.log(nextSunday);
+            let nextSundayMidnight;
+
+            if (currentDayOfWeek === dayOfWeekNumber && now.getHours() < 24) {
+                nextSunday.setDate(nextSunday.getDate() + 7);
+                console.log(nextSunday);
+            }
+            else {
+                nextSunday.setDate(nextSunday.getDate());
+                // if (nextSunday.getDate() > daysInCurrentMonth.getDate()) {
+                //     nextSunday.setDate(nextSunday.getDate() - daysInCurrentMonth.getDate());
+                //     console.log(nextSunday);
+                // }
+                for (let index = 0; index < days.length; index++) {
+                    if ((dayOfWeekNumber == days[index].getDay()) && (nextSunday.getDate() == days[index].getDate())) {
+                        if (days[index].getDate() > currentDate) {
+                            console.log(days[index].getTime());
+                            if (days[index].getTime() != now.getTime()) {
+                                nextSundayMidnight = days[index].getTime() - now.getTime();
+                            };
+                            console.log(days[index]);
+                        }
+                        else{
+                            console.log(days[index + 7].getTime());
+                            if (days[index].getTime() != now.getTime()) {
+                                nextSundayMidnight = days[index].getTime() - now.getTime();
+                            }
+                            else {
+                                nextSundayMidnight = days[index + 7].getTime() - now.getTime();
+                            }
+                            console.log(days[index]);
+                        }
+                    }
+                }
+
+                
+            }
+
+            
+
+            
+            console.log(nextSundayMidnight);
 
             setTimeout(function() {
                 // Code to execute on Sundays
-                console.log('Sunday');
+
+
+                console.log(nextSundayMidnight + (nextSundayMidnight * 1000));
 
                 setInterval(function() {
                     // Code to execute on Sundays
                     console.log('Sunday');
                 }, 7 * 24 * 60 * 60 * 1000); // Repeat every 24 hours
-            }, nextSundayMidnight);
+            }, 1000);
         }
 
         let alarmTimeSet;
 
         for (let index = 0; index < alarmArray.length; index++) {
             alarmTimeSet = alarmArray[index].time
-            
+
         }
 
         console.log("df " + alarmTimeSet);
@@ -769,18 +822,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        
+
         let alarmTimeSetVariable = setTimeout(function () {
             let selectedOptionValue = gameSelection.value;
             switch (selectedOptionValue) {
                 case "Match_Game":
                     matchGame()
                     break;
-    
+
                 case "Math_Equation":
                     MathGame()
                     break;
-            
+
                 default:
                     alert('Wake up.');
                     break;
@@ -791,17 +844,17 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelBtn.addEventListener('click', function () {
             let pos = Array.from(document.querySelectorAll('.set-alarm')).indexOf(this.parentNode);
             clearTimeout(alarmTimeSetVariable);
-            alarmArray.splice(pos, 1); 
+            alarmArray.splice(pos, 1);
             this.parentNode.remove();
             console.log(alarmArray);
         })
         AlarmBlockGenerator(alarmDate, cancelBtn, alarmTItle, alarmTimeHolder, setClockTime, alarmDates, alarmTimeSetVariable, alarmNameInput);
 
-        
+
         console.log('day ' + now.getDay());
         console.log('time ' + now.getTime());
 
-    }    
+    }
 
 
 
@@ -813,15 +866,15 @@ document.addEventListener('DOMContentLoaded', function () {
         //writes to title of the alarm
         alarmTItle.innerHTML = alarmNameInput;
         alarmTItle.classList.add('alarm-title');
-        
+
         //writes the chosen alarm
         alarmTimeHolder.innerHTML = `${checkTime(alarmDate.getHours())}:${checkTime(alarmDate.getMinutes())}`;
         alarmTimeHolder.classList.add('alarmTimeHolder');
 
 
         setClockTime.classList.add('set-alarm');
-        
-        
+
+
 
 
 
@@ -841,11 +894,11 @@ document.addEventListener('DOMContentLoaded', function () {
         alarmDates.classList.add('alarm-dates');
 
         let sidebar = document.querySelector('.sidebar')
-  
+
         sidebar.appendChild(setClockTime);
 
 
-        //Adding 
+        //Adding
         setClockTime.appendChild(alarmTimeHolder);
         setClockTime.appendChild(alarmTItle);
         setClockTime.appendChild(alarmDates);
@@ -853,7 +906,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('set-alarm');
     }
 
-
+    function clearAllAlarms() {
+        document.querySelectorAll('.set-alarm').forEach(e => {
+            e.remove();
+        });
+    }
 
     //function start the match game to dtop the alarm
     function matchGame() {
@@ -863,7 +920,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const gameContainer = document.createElement('div');
         gameContainer.classList.add('game-container');
         mainContainer.appendChild(gameContainer);
-        
+
         //Creates the game title
         const title = document.createElement('h1');
         title.classList.add('game-title');
@@ -881,25 +938,25 @@ document.addEventListener('DOMContentLoaded', function () {
         //for matchCount function
         let matchCountNumber = 0;
 
-        
+
         gameDisplay.style.gridTemplateColumns = `repeat(${checkMatchGameSettingsValue}, 1fr)`;
 
 
         if (screenWidth <= 768) {
-            mainContainer.style.display = 'grid';  
+            mainContainer.style.display = 'grid';
         }
-        
-        
+
+
         // Generates the match game cards
         for (let i = 0; i < (checkMatchGameSettingsValue * 2); i++) {
 
             const matchCard = document.createElement('div');
-            
+
             assingedLetterNum += 1;
 
             if (assingedLetterNum > checkMatchGameSettingsValue){
                 assingedLetterNum = 1;
-                
+
             }
 
 
@@ -911,7 +968,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 case 2:
                     matchCard.setAttribute('data-card', 'B');
-                    console.log(assingedLetterNum);  
+                    console.log(assingedLetterNum);
                     break;
 
                 case 3:
@@ -928,7 +985,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     matchCard.setAttribute('data-card', 'E');
                     console.log(matchCard);
                     break;
-            
+
                 default:
                     break;
             };
@@ -940,8 +997,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             gameDisplay.appendChild(matchCard);
 
-            
-            
+
+
         }
 
         //Shuffles Cards
@@ -953,15 +1010,15 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         shuffleCards();
-        
-        
+
+
         function flipCard(matchCard) {
             if (!firstCard) {
                 firstCard = matchCard;
                 matchCard.innerHTML = firstCard.dataset.card;
                 firstCard.classList.add('flipped');
             } else if (!secondCard && matchCard !== firstCard) {
-                secondCard = matchCard; 
+                secondCard = matchCard;
                 matchCard.innerHTML = secondCard.dataset.card;
                 secondCard.classList.add('flipped');
                 checkMatch(matchCard);
@@ -969,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(matchCard);
         }
 
-        function checkMatch(matchCard) { 
+        function checkMatch(matchCard) {
             let matchCards = document.querySelectorAll('.match-card');
             if (firstCard.dataset.card === secondCard.dataset.card){
                 firstCard.classList.add('matched');
@@ -978,11 +1035,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 firstCard = null;
                 secondCard = null;
                 matchCount();
-                
+
 
             }
-            else{   
-                
+            else{
+
 
 
                 if (firstCard.classList.contains('matched')){
@@ -1020,18 +1077,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        
+
 
         function matchCount(matchCard) {
             let matchCards = document.querySelectorAll('.match-card');
             console.log(matchCountNumber);
             matchCountNumber += 1;
-            
-            //This line will be used when i create settings for the game   
+
+            //This line will be used when i create settings for the game
             if (matchCountNumber == checkMatchGameSettingsValue) {
                 title.classList.remove('game-title');
                 title.classList.remove('game-options-title');
-                title.classList.add('game-congratulation-title');  
+                title.classList.add('game-congratulation-title');
                 title.innerText = 'Congratulations';
                 setTimeout(() => {
                     matchCards.forEach(matchCard => {
@@ -1039,16 +1096,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         setTimeout(() => {
                             mainContainer.removeChild(gameContainer);
                             if (screenWidth <= 768) {
-                                mainContainer.style.display = '';  
+                                mainContainer.style.display = '';
                             }
                         }, 2000)
                     });
                     matchCountNumber = 0;
                 }, 500);
 
-            } 
-            
-            
+            }
+
+
         }
 
 
@@ -1057,8 +1114,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    function MathGame() { 
-        
+    function MathGame() {
+
         function createElement(tag, className, text, parent) {
             const element = document.createElement(tag);
             element.classList.add(className);
@@ -1066,47 +1123,47 @@ document.addEventListener('DOMContentLoaded', function () {
             parent.appendChild(element);
             return element;
         }
-        
+
         function getRandomNumber(digits) {
             return Math.floor((Math.random() * (Math.pow(10, digits) - 1)) + 1);
         }
-        
+
         //Creates the game container
         const gameContainer = createElement('div', 'game-container', null, mainContainer);
-        
+
         //Creates the game title
         const title = createElement('h1', 'game-title', 'Wake up', gameContainer);
-        
+
         //Displays the game
         const gameDisplay = createElement('div', 'game-display', null, gameContainer);
-        
+
         const operand1 = operands1Selection.value === '2' ? getRandomNumber(2) : getRandomNumber(1);
         const operand2 = operands2Selection.value === '2' ? getRandomNumber(2) : getRandomNumber(1);
-        
+
         if (screenWidth <= 768) {
-            mainContainer.style.display = 'grid';  
+            mainContainer.style.display = 'grid';
         }
-        
+
         const goodResult = operand1 + operand2;
         console.log(goodResult);
-        
+
         gameDisplay.style.gridTemplateColumns = `repeat(5, 1fr)`;
-        
+
         $(gameDisplay).append(`<div class="game-display-operand">${operand1}<div>`);
         $(gameDisplay).append('<div class="game-display-operand">+<div>');
         $(gameDisplay).append(`<div class="game-display-operand">${operand2}<div>`);
         $(gameDisplay).append('<div class="game-display-operand">=<div>');
         $(gameDisplay).append(`<div class="game-display-operand"><input type="number" class="math-game-result"><div>`);
-        
+
         const mathGameResultDiv = gameContainer.querySelector('.math-game-result');
-        
+
         function changeBackgroundColor(color, duration) {
             gameContainer.style.backgroundColor = color;
             setTimeout(() => {
                 gameContainer.style.backgroundColor = '';
             }, duration);
         }
-        
+
         mathGameResultDiv.addEventListener('change', function () {
             const userResult = mathGameResultDiv.value;
             console.log('listening');
@@ -1130,9 +1187,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 changeBackgroundColor('red', 500);
             }
         });
-        
-        
-        
+
+
+
 
 
     }
@@ -1140,14 +1197,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function applyStylesBasedOnWidth() {
         screenWidth = window.innerWidth;
         sidebar_switch_input.checked = false;
-        
+
         // Desktop styles
         if (screenWidth >= 1200) {
             alarmForm.style.removeProperty('grid-template-areas');
             const alarmStyle = setAlarmButton.style;
             alarmStyle.left = dateToggleInput.checked ? '0%' : '104%';
             alarmStyle.top = '';
-        } 
+        }
         // Tablet styles
         else if ((screenWidth >= 768) && (screenWidth <= 1199)) {
             const alarmStyle = setAlarmButton.style;

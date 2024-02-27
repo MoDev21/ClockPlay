@@ -1051,5 +1051,28 @@ button:hover {
         padding-bottom: 100px;
     }
 
-    .container:ch
+    .clear-all-alarm-btn {
+        background-color: #B0E04A;
+        color: #141414;
+        border-radius: 30px;
+        width: 90px;
+        height: 90px;
+        border: none;
+        transition: .5s;
+        display: none;
+    }
+
+    .clear-all-alarm-btn:hover{
+        cursor: pointer;
+        background-color: #5C6B3B;
+    }
+
+    .clear-all-alarm-btn:active{
+        background-color: #5C6B3B;
+    }
+
+    .clear-all-alarm-btn:disabled{
+        background-color: #141414;
+        cursor: not-allowed;
+    }
 }
